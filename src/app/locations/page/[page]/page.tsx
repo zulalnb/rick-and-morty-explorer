@@ -11,8 +11,8 @@ const getLocations = async (page = 1) => {
   return data;
 };
 
-export default async function Page() {
-  const locations = await getLocations();
+export default async function Page({ params }: { params: { page: number } }) {
+  const locations = await getLocations(params.page);
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>
       <Typography
@@ -34,7 +34,10 @@ export default async function Page() {
       {locations.results && (
         <>
           <LocationList locations={locations.results} />
-          <Pagination count={locations.info.pages} currentPage={1} />
+          <Pagination
+            count={locations.info.pages}
+            currentPage={Number(params.page)}
+          />
         </>
       )}
     </Container>
