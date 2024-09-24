@@ -7,9 +7,11 @@ import PaginationItem from "@mui/material/PaginationItem";
 export const Pagination = ({
   count,
   currentPage,
+  pathname,
 }: {
   count: number;
   currentPage: number;
+  pathname: string;
 }) => {
   return (
     <MUIPagination
@@ -34,7 +36,7 @@ export const Pagination = ({
         return (
           <PaginationItem
             component={item.page === currentPage ? "span" : Link}
-            href={`/locations/page/${item.page}`}
+            href={`${pathname}/page/${item.page}`}
             {...item}
           />
         );

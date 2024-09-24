@@ -38,6 +38,7 @@ export default async function Page({ params }: { params: { page: number } }) {
           <Pagination
             count={locations.info.pages}
             currentPage={Number(params.page)}
+            pathname="/locations"
           />
         </>
       )}
