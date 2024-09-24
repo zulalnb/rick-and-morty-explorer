@@ -5,6 +5,7 @@ import { Pagination } from "@/components/Pagination";
 import { LocationDetail } from "@/types/locationDetail";
 import { Character } from "@/types/character";
 import { paginateItems } from "@/lib/utils";
+import { FilterButtons } from "@/components/FilterButtons";
 
 const getLocationInfo = async (id: number): Promise<LocationDetail> => {
   const res = await fetch(
@@ -60,7 +61,7 @@ export default async function Page({
     paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
 
   return (
-    <Container component={"main"} sx={{ marginY: 6 }}>
+    <Container component={"main"} sx={{ marginY: 4 }}>
       <Typography
         variant="h1"
         sx={{
@@ -79,6 +80,7 @@ export default async function Page({
       </Typography>
       {characters && (
         <>
+          <FilterButtons locationId={params.id} />
           <CharacterList characters={characters} />
           <Pagination
             count={totalPages}
