@@ -47,9 +47,7 @@ export const LocationItem = ({ location }: { location: Location }) => {
             <StyledTableHead component="th" scope="row">
               Dimension:
             </StyledTableHead>
-            <StyledTableCell>
-              {location.dimension === "unknown" ? "-" : location.dimension}
-            </StyledTableCell>
+            <StyledTableCell>{location.dimension || "-"}</StyledTableCell>
           </TableRow>
           <TableRow>
             <StyledTableHead component="th" scope="row">

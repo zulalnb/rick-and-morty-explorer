@@ -14,7 +14,7 @@ export const Pagination = ({
   return (
     <MUIPagination
       sx={{
-        mt: 4,
+        mt: 12,
         "& .MuiPagination-ul": { justifyContent: "center" },
         "& .Mui-selected": {
           color: "white",
