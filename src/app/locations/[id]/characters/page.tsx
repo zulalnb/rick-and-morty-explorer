@@ -1,11 +1,11 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { CharacterList } from "@/components/CharacterList";
+import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
 import { LocationDetail } from "@/types/locationDetail";
 import { Character } from "@/types/character";
 import { paginateItems } from "@/lib/utils";
-import { FilterButtons } from "@/components/FilterButtons";
 
 const getLocationInfo = async (id: number): Promise<LocationDetail> => {
   const res = await fetch(
