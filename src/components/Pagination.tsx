@@ -8,11 +8,19 @@ export const Pagination = ({
   count,
   currentPage,
   pathname,
+  isQueryParam = false,
 }: {
   count: number;
   currentPage: number;
   pathname: string;
+  isQueryParam?: boolean;
 }) => {
+  const pathPrefix = !isQueryParam
+    ? `${pathname}/page/`
+    : pathname.includes("status")
+    ? `${pathname}&page=`
+    : `${pathname}/?page=`;
+
   return (
     <MUIPagination
       sx={{
@@ -36,7 +44,7 @@ export const Pagination = ({
         return (
           <PaginationItem
             component={item.page === currentPage ? "span" : Link}
-            href={`${pathname}/page/${item.page}`}
+            href={`${pathPrefix}${item.page}`}
             {...item}
           />
         );

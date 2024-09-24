@@ -24,8 +24,19 @@ const getCharacterDetailsByLocation = async (
   return data;
 };
 
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: number };
+  searchParams: { page?: number; status?: string };
+}) {
   const locationInfo = await getLocationInfo(params.id);
+
+  const queryParams = searchParams.status
+    ? `/?status=${searchParams.status}`
+    : "";
+  const pathname = `/locations/${params.id}/characters${queryParams}`;
 
   const characterIds = locationInfo.residents.map((residentUrl) => {
     const parts = residentUrl.split("/");
@@ -37,9 +48,16 @@ export default async function Page({ params }: { params: { id: number } }) {
       ? await getCharacterDetailsByLocation(characterIds)
       : [];
 
-  const { paginatedArray, totalPages } = paginateItems(allCharacters);
+  const filteredCharacters = searchParams.status
+    ? allCharacters.filter(
+        (character) => character.status.toLowerCase() === searchParams.status
+      )
+    : allCharacters;
 
-  const characters = paginatedArray[0];
+  const { paginatedArray, totalPages } = paginateItems(filteredCharacters);
+
+  const characters =
+    paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
 
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>
@@ -64,8 +82,9 @@ export default async function Page({ params }: { params: { id: number } }) {
           <CharacterList characters={characters} />
           <Pagination
             count={totalPages}
-            currentPage={1}
-            pathname={`/locations/${params.id}/characters`}
+            currentPage={Number(searchParams.page) || 1}
+            pathname={pathname}
+            isQueryParam
           />
         </>
       )}
