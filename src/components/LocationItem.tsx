@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
@@ -66,7 +67,9 @@ export const LocationItem = ({ location }: { location: Location }) => {
             marginLeft: 2,
           }}
         >
-          <ArrowForwardIosIcon />
+          <Link href={`/locations/${location.id}/characters`}>
+            <ArrowForwardIosIcon />
+          </Link>
         </Box>
       </Stack>
     </Grid>
