@@ -30,7 +30,10 @@ export default async function Page({ params }: { params: { id: number } }) {
     return parseInt(parts[parts.length - 1], 10);
   });
 
-  const characters = await getCharacterDetailsByLocation(characterIds);
+  const characters =
+    characterIds.length > 0
+      ? await getCharacterDetailsByLocation(characterIds)
+      : [];
 
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>
