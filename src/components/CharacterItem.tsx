@@ -13,13 +13,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 
-export const CharacterItem = ({ character }: { character: Character }) => {
+export const CharacterItem = ({
+  character,
+  isDetail = false,
+}: {
+  character: Character;
+  isDetail: boolean;
+}) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
 
   return (
-    <Grid key={character.id} size={{ xs: 12, md: 4 }}>
+    <Grid key={character.id} size={{ xs: 12, md: isDetail ? 6 : 4 }}>
       <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
         <Image
           src={character.image}
@@ -71,15 +77,26 @@ export const CharacterItem = ({ character }: { character: Character }) => {
                   : "disabled"
               }
             />
-            <Typography>
+            <Typography sx={{ fontSize: isDetail ? 18 : 16 }}>
               {character.status} - {character.species}
             </Typography>
           </Box>
+          {isDetail && (
+            <Typography sx={{ fontStyle: "italic", fontSize: 18 }}>
+              {character.location.name}
+            </Typography>
+          )}
         </Box>
 
-        <Link href={`/characters/${character.id}`}>
-          <ArrowForwardIosIcon />
-        </Link>
+        {isDetail ? (
+          <Typography sx={{ fontStyle: "italic" }}>
+            {character.type || "-"} / {character.gender}
+          </Typography>
+        ) : (
+          <Link href={`/characters/${character.id}`}>
+            <ArrowForwardIosIcon />
+          </Link>
+        )}
       </Box>
     </Grid>
   );

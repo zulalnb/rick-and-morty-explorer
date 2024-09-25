@@ -8,6 +8,7 @@ import { Character } from "@/types/character";
 import { Location } from "@/types/location";
 import { getRandomItems } from "@/lib/utils";
 import Link from "next/link";
+import { CharacterItem } from "@/components/CharacterItem";
 
 const getLocation = async (url: string): Promise<Location> => {
   const res = await fetch(url);
@@ -69,59 +70,7 @@ export default async function Page({ params }: { params: { id: number } }) {
     <main>
       <Container sx={{ marginY: 4 }}>
         <Grid container spacing={{ xs: 6, md: 8 }}>
-          {character && (
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
-                <Image
-                  src={character.image}
-                  alt={character.name}
-                  fill
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0,
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Box>
-                  <Typography
-                    sx={{ fontWeight: "bold", color: "gray", fontSize: 28 }}
-                  >
-                    {character.name}
-                  </Typography>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <CircleIcon
-                      color={
-                        character.status === "Dead"
-                          ? "error"
-                          : character.status === "Alive"
-                          ? "success"
-                          : "disabled"
-                      }
-                    />
-                    <Typography sx={{ fontSize: 18 }}>
-                      {character.status} - {character.species}
-                    </Typography>
-                  </Box>
-                  <Typography sx={{ fontStyle: "italic", fontSize: 18 }}>
-                    {character.location.name}
-                  </Typography>
-                </Box>
-                <Typography sx={{ fontStyle: "italic" }}>
-                  {character.type || "-"} / {character.gender}
-                </Typography>
-              </Box>
-            </Grid>
-          )}
+          {character && <CharacterItem character={character} isDetail />}
           {otherCharacters.length > 0 && (
             <Grid size={6}>
               <Box>
