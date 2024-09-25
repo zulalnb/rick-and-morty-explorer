@@ -6,10 +6,16 @@ import { Character } from "@/types/character";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import CircleIcon from "@mui/icons-material/Circle";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useAppDispatch } from "@/lib/hooks";
+import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 
 export const CharacterItem = ({ character }: { character: Character }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <Grid key={character.id} size={{ xs: 12, md: 4 }}>
       <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
@@ -25,6 +31,22 @@ export const CharacterItem = ({ character }: { character: Character }) => {
             left: 0,
           }}
         />
+        <IconButton
+          onClick={() => dispatch(toggleFavorite(character))}
+          sx={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            zIndex: 2,
+            color: "white",
+          }}
+        >
+          <FavoriteIcon
+            sx={{
+              fontSize: 36,
+            }}
+          />
+        </IconButton>
       </Box>
       <Box
         sx={{

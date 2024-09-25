@@ -1,5 +1,8 @@
+import NextLink from "next/link";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
@@ -61,35 +64,57 @@ export default async function Page({
     paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
 
   return (
-    <Container component={"main"} sx={{ marginY: 4 }}>
-      <Typography
-        variant="h1"
-        sx={{
-          position: "absolute",
-          width: 1,
-          height: 1,
-          p: 0,
-          margin: -1,
-          overflow: "hidden",
-          clip: "rect(0, 0, 0, 0)",
-          whiteSpace: "nowrap",
-          borderWidth: 0,
-        }}
-      >
-        Characters
-      </Typography>
-      {characters && (
-        <>
-          <FilterButtons locationId={params.id} />
-          <CharacterList characters={characters} />
-          <Pagination
-            count={totalPages}
-            currentPage={Number(searchParams.page) || 1}
-            pathname={pathname}
-            isQueryParam
-          />
-        </>
-      )}
-    </Container>
+    <main>
+      <Container sx={{ marginY: 4 }}>
+        <Typography
+          variant="h1"
+          sx={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            p: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            borderWidth: 0,
+          }}
+        >
+          Characters
+        </Typography>
+        {characters && (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 1,
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+                Filter by status
+              </Typography>
+              <Link
+                component={NextLink}
+                href="/favorites"
+                color="inherit"
+                sx={{ fontWeight: "bold", fontSize: 18 }}
+              >
+                My Favorites
+              </Link>
+            </Box>
+            <FilterButtons locationId={params.id} />
+            <CharacterList characters={characters} />
+            <Pagination
+              count={totalPages}
+              currentPage={Number(searchParams.page) || 1}
+              pathname={pathname}
+              isQueryParam
+            />
+          </>
+        )}
+      </Container>
+    </main>
   );
 }

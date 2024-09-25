@@ -67,7 +67,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 
   return (
     <main>
-      <Container component={"main"} sx={{ marginY: 4 }}>
+      <Container sx={{ marginY: 4 }}>
         <Grid container spacing={{ xs: 6, md: 8 }}>
           {character && (
             <Grid size={{ xs: 12, md: 6 }}>
