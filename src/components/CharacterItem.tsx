@@ -18,7 +18,7 @@ export const CharacterItem = ({
   isDetail = false,
 }: {
   character: Character;
-  isDetail: boolean;
+  isDetail?: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
