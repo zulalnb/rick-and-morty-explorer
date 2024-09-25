@@ -25,7 +25,11 @@ export const CharacterItem = ({
   const isFavorite = favorites.find((item) => item.id === character.id);
 
   return (
-    <Grid key={character.id} size={{ xs: 12, md: isDetail ? 6 : 4 }}>
+    <Grid
+      key={character.id}
+      flexShrink={{ xs: isDetail ? 1 : 0, md: 1 }}
+      size={{ xs: 12, md: isDetail ? 6 : 4 }}
+    >
       <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
         <Image
           src={character.image}

@@ -85,7 +85,7 @@ export default async function Page({
       </Container>
       {characters && (
         <>
-          <Container sx={{ marginY: 4 }}>
+          <Container sx={{ marginTop: 2, marginBottom: 4 }}>
             <Box
               sx={{
                 display: "flex",
@@ -108,9 +108,7 @@ export default async function Page({
             </Box>
           </Container>
           <FilterButtons locationId={params.id} />
-          <Container sx={{ marginY: 4 }}>
-            <CharacterList characters={characters} />
-          </Container>
+          <CharacterList characters={characters} />
           <Container sx={{ marginY: 4 }}>
             <Pagination
               count={totalPages}
