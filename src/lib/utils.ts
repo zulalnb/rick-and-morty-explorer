@@ -1,7 +1,7 @@
-export function paginateItems<T>(
+export const paginateItems = <T>(
   array: T[],
   itemsPerPage: number = 3
-): { paginatedArray: T[][]; totalPages: number } {
+): { paginatedArray: T[][]; totalPages: number } => {
   const totalPages = Math.ceil(array.length / itemsPerPage);
   const paginatedArray: T[][] = [];
 
@@ -10,7 +10,7 @@ export function paginateItems<T>(
   }
 
   return { paginatedArray, totalPages };
-}
+};
 
 export const getRandomItems = <T>(
   array: T[],

@@ -28,7 +28,8 @@ const getCharacterDetailsByLocation = async (
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${ids}`
   );
   const data: Character[] = await res.json();
-  return data;
+  const verifyData: Character[] = Array.isArray(data) ? data : [data];
+  return verifyData;
 };
 
 export default async function Page({
