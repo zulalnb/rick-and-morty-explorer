@@ -10,11 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import CircleIcon from "@mui/icons-material/Circle";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 
 export const CharacterItem = ({ character }: { character: Character }) => {
   const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.favorites);
+  const isFavorite = favorites.find((item) => item.id === character.id);
 
   return (
     <Grid key={character.id} size={{ xs: 12, md: 4 }}>
@@ -38,7 +40,7 @@ export const CharacterItem = ({ character }: { character: Character }) => {
             top: 10,
             right: 10,
             zIndex: 2,
-            color: "white",
+            color: isFavorite ? "red" : "white",
           }}
         >
           <FavoriteIcon
