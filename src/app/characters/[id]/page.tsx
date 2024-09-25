@@ -1,13 +1,12 @@
+import Link from "next/link";
 import Image from "next/image";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CircleIcon from "@mui/icons-material/Circle";
 import { Character } from "@/types/character";
 import { Location } from "@/types/location";
 import { getRandomItems } from "@/lib/utils";
-import Link from "next/link";
 import { CharacterItem } from "@/components/CharacterItem";
 
 const getLocation = async (url: string): Promise<Location> => {
@@ -20,6 +19,9 @@ const getCharacterDetail = async (id: number): Promise<Character> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${id}`
   );
+  if (!res.ok) {
+    throw new Error(`Failed to fetch character with ID: ${id}`);
+  }
   const data: Character = await res.json();
   return data;
 };

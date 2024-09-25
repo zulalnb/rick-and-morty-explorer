@@ -14,6 +14,9 @@ const getLocationInfo = async (id: number): Promise<LocationDetail> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/location/${id}`
   );
+  if (!res.ok) {
+    throw new Error(`Failed to fetch character with ID: ${id}`);
+  }
   const data: LocationDetail = await res.json();
   return data;
 };
