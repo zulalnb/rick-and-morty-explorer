@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Character } from "@/types/character";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
@@ -36,7 +37,7 @@ export const CharacterItem = ({ character }: { character: Character }) => {
           <Typography sx={{ fontWeight: "bold", color: "gray", fontSize: 24 }}>
             {character.name}
           </Typography>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <CircleIcon
               color={
                 character.status === "Dead"
@@ -47,12 +48,14 @@ export const CharacterItem = ({ character }: { character: Character }) => {
               }
             />
             <Typography>
-              {character.status} - {character.species}{" "}
+              {character.status} - {character.species}
             </Typography>
           </Box>
         </Box>
 
-        <ArrowForwardIosIcon />
+        <Link href={`/characters/${character.id}`}>
+          <ArrowForwardIosIcon />
+        </Link>
       </Box>
     </Grid>
   );
