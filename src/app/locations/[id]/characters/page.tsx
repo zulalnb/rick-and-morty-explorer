@@ -82,8 +82,10 @@ export default async function Page({
         >
           Characters
         </Typography>
-        {characters && (
-          <>
+      </Container>
+      {characters && (
+        <>
+          <Container sx={{ marginY: 4 }}>
             <Box
               sx={{
                 display: "flex",
@@ -104,17 +106,21 @@ export default async function Page({
                 My Favorites
               </Link>
             </Box>
-            <FilterButtons locationId={params.id} />
+          </Container>
+          <FilterButtons locationId={params.id} />
+          <Container sx={{ marginY: 4 }}>
             <CharacterList characters={characters} />
+          </Container>
+          <Container sx={{ marginY: 4 }}>
             <Pagination
               count={totalPages}
               currentPage={Number(searchParams.page) || 1}
               pathname={pathname}
               isQueryParam
             />
-          </>
-        )}
-      </Container>
+          </Container>
+        </>
+      )}
     </main>
   );
 }
