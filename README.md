@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rick and Morty Explorer
 
-## Getting Started
+Explore characters and locations from the Rick and Morty universe! This web application allows users to browse locations, view detailed character information, filter characters by their status (alive, dead, or unknown), and manage their favorite characters. The application is built using React, Next.js, TypeScript, and Redux.
 
-First, run the development server:
+## Live Demo
+You can check out the live demo of this project here:
+[Live Demo](https://rick-and-morty-explorer-lyart.vercel.app/)
 
+## Features
+
+- **Locations List:** View a paginated list of all locations from the Rick and Morty API.
+- **Location Characters:** View and filter characters from specific locations based on their status (alive, dead, unknown).
+- **Character Details:** Detailed view of each character, including species, origin, gender, and episodes they appeared in.
+- **Favorites Management:** Add and remove characters from your personal "My Favorites" list, which is stored in Redux.
+- **Responsive Design:** Optimized for mobile and desktop devices.
+  
+## Tech Stack
+
+- **Next.js**: Server-side rendering and routing.
+- **React**: UI components.
+- **Redux Toolkit**: For managing the state of the "My Favorites" feature.
+- **TypeScript**: Type-safe development.
+- **SCSS**: CSS pre-processing for styling.
+- **Material UI**: A popular React UI framework for styling components.
+
+## Installation
+
+To set up the project locally, follow these steps:
+
+Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone https://github.com/zulalnb/rick-and-morty-explorer.git
+   cd rick-and-morty-explorer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a .env file in the root of your project and add your API key to the .env file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+NEXT_PUBLIC_BASE_API_URL=https://rickandmortyapi.com/api
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Run the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
-## Deploy on Vercel
+## Building for Production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To create an optimized production build:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+  npm run build
+```
+
+Then start the server:
+
+```bash
+  npm run start
+```
