@@ -87,7 +87,7 @@ export default async function Page({
           Characters
         </Typography>
       </Container>
-      {characters && (
+      {allCharacters && (
         <>
           <Container sx={{ marginTop: 2, marginBottom: 4 }}>
             <Box
@@ -112,6 +112,10 @@ export default async function Page({
             </Box>
           </Container>
           <FilterButtons locationId={params.id} />
+        </>
+      )}
+      {characters && (
+        <>
           <CharacterList characters={characters} />
           <Container sx={{ marginY: 4 }}>
             <Pagination
