@@ -24,7 +24,6 @@ export const FilterButtons = ({ locationId }: { locationId: number }) => {
           whiteSpace: "nowrap",
           overflowX: "scroll",
           WebkitOverflowScrolling: "touch",
-          pb: 1,
           [theme.breakpoints.down("sm")]: {
             paddingX: 2,
           },

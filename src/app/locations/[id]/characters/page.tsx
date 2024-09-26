@@ -69,7 +69,7 @@ export default async function Page({
 
   return (
     <main>
-      <Container sx={{ marginY: 4 }}>
+      <Container>
         <Typography
           variant="h1"
           sx={{
@@ -89,7 +89,7 @@ export default async function Page({
       </Container>
       {allCharacters && (
         <>
-          <Container sx={{ marginTop: 2, marginBottom: 4 }}>
+          <Container>
             <Box
               sx={{
                 display: "flex",
@@ -117,14 +117,12 @@ export default async function Page({
       {characters && (
         <>
           <CharacterList characters={characters} />
-          <Container sx={{ marginY: 4 }}>
-            <Pagination
-              count={totalPages}
-              currentPage={Number(searchParams.page) || 1}
-              pathname={pathname}
-              isQueryParam
-            />
-          </Container>
+          <Pagination
+            count={totalPages}
+            currentPage={Number(searchParams.page) || 1}
+            pathname={pathname}
+            isQueryParam
+          />
         </>
       )}
     </main>

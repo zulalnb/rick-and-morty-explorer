@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Theme } from "@mui/material";
 import MUIPagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 
@@ -23,8 +24,11 @@ export const Pagination = ({
 
   return (
     <MUIPagination
-      sx={{
+      sx={(theme: Theme) => ({
         mt: 12,
+        [theme.breakpoints.up("md")]: {
+          mt: 8,
+        },
         "& .MuiPagination-ul": { justifyContent: "center" },
         "& .Mui-selected": {
           color: "white",
@@ -37,7 +41,7 @@ export const Pagination = ({
             cursor: "text",
           },
         },
-      }}
+      })}
       count={count}
       page={currentPage}
       renderItem={(item) => {
