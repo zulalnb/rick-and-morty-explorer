@@ -91,7 +91,7 @@ export default async function Page({ params }: { params: { id: number } }) {
         <Grid container spacing={{ xs: 6, md: 8 }}>
           {character && <CharacterItem character={character} isDetail />}
           {otherCharacters.length > 0 && (
-            <Grid size={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Box>
                 <Typography sx={{ fontWeight: "bold", fontSize: 24, mb: 4 }}>
                   Other Characters
