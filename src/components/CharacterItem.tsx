@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Grid from "@mui/material/Grid2";
@@ -13,6 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 import { Character } from "@/types/character";
+import { CharacterImageWrapper } from "./CharacterImageWrapper";
 
 export const CharacterItem = ({
   character,
@@ -32,19 +32,11 @@ export const CharacterItem = ({
       flexShrink={{ xs: isDetail ? 1 : 0, md: 1 }}
       size={{ xs: 12, md: isDetail || pathname === "/favorites" ? 6 : 4 }}
     >
-      <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
-        <Image
+      <Box sx={{ position: "relative" }}>
+        <CharacterImageWrapper
           src={character.image}
           alt={character.name}
-          fill
           priority
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
         />
         <IconButton
           onClick={() => dispatch(toggleFavorite(character))}

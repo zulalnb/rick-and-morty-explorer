@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
@@ -9,6 +8,7 @@ import { Character } from "@/types/character";
 import { Location } from "@/types/location";
 import { getRandomItems } from "@/lib/utils";
 import { CharacterItem } from "@/components/CharacterItem";
+import { CharacterImageWrapper } from "@/components/CharacterImageWrapper";
 
 const getLocation = async (url: string): Promise<Location> => {
   const res = await fetch(url);
@@ -104,25 +104,11 @@ export default async function Page({ params }: { params: { id: number } }) {
                       key={character.id}
                       sx={{ display: "flex", gap: 2 }}
                     >
-                      <Box
-                        sx={{
-                          position: "relative",
-                          aspectRatio: 1 / 1,
-                          width: "20%",
-                        }}
-                      >
-                        <Image
+                      <Box sx={{ width: "20%" }}>
+                        <CharacterImageWrapper
                           src={character.image}
                           alt={character.name}
-                          fill
                           priority
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            left: 0,
-                          }}
                         />
                       </Box>
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
