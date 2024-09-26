@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
@@ -20,7 +21,7 @@ const getCharacterDetail = async (id: number): Promise<Character> => {
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${id}`
   );
   if (!res.ok) {
-    throw new Error(`Failed to fetch character with ID: ${id}`);
+    notFound();
   }
   const data: Character = await res.json();
   return data;
@@ -33,7 +34,8 @@ const getOtherCharacters = async (
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${characterIds}`
   );
-  const characters: Character[] = await res.json();
+  const data: Character[] = await res.json();
+  const characters: Character[] = Array.isArray(data) ? data : [data];
   const filteredCharacters = characters.filter(
     (character) => character.status === status
   );
@@ -44,6 +46,21 @@ const getOtherCharacters = async (
 
   return otherCharacters;
 };
+
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const character = await getCharacterDetail(params.id);
+
+  return {
+    title: character.name,
+    description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
+    openGraph: {
+      title: `${character.name} | Rick and Morty Explorer`,
+      description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
+      type: "website",
+      images: [character.image],
+    },
+  };
+}
 
 export default async function Page({ params }: { params: { id: number } }) {
   const character = await getCharacterDetail(params.id);

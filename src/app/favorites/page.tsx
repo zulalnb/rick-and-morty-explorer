@@ -1,22 +1,25 @@
-"use client";
-
+import { Metadata } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { CharacterList } from "@/components/CharacterList";
-import { Pagination } from "@/components/Pagination";
-import { paginateItems } from "@/lib/utils";
-import { useAppSelector } from "@/lib/hooks";
+import { FavoriteCharacterList } from "@/components/FavoriteCharacterList";
+
+export const metadata: Metadata = {
+  title: "Favorites",
+  description:
+    "Discover and manage your favorite characters from the Rick and Morty universe. View character details, track their stories, and explore their adventures.",
+  openGraph: {
+    title: "Favorites | Rick and Morty Explorer",
+    description:
+      "Discover and manage your favorite characters from the Rick and Morty universe. View character details, track their stories, and explore their adventures.",
+    type: "website",
+  },
+};
 
 export default function Page({
   searchParams,
 }: {
-  searchParams: { page?: number; status?: string };
+  searchParams: { page?: number };
 }) {
-  const pathname = `/favorites`;
-  const favorites = useAppSelector((state) => state.favorites);
-  const { paginatedArray, totalPages } = paginateItems(favorites, 2);
-  const characters =
-    paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
   return (
     <main>
       <Container sx={{ marginY: 4 }}>
@@ -36,17 +39,7 @@ export default function Page({
         >
           Favorites
         </Typography>
-        {characters && (
-          <>
-            <CharacterList characters={characters} />
-            <Pagination
-              count={totalPages}
-              currentPage={Number(searchParams.page) || 1}
-              pathname={pathname}
-              isQueryParam
-            />
-          </>
-        )}
+        <FavoriteCharacterList page={Number(searchParams.page)} />
       </Container>
     </main>
   );

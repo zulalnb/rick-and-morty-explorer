@@ -15,9 +15,18 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Rick and Morty Explorer | Discover Locations and Characters",
+  title: {
+    template: "%s | Rick and Morty Explorer",
+    default: "Rick and Morty Explorer | Discover Locations and Characters",
+  },
   description:
     "Explore the vast universe of Rick and Morty. Browse through locations, view detailed character profiles, and manage your favorites. Stay connected with your favorite characters from the multiverse!",
+  openGraph: {
+    title: "Rick and Morty Explorer | Discover Locations and Characters",
+    description:
+      "Explore the vast universe of Rick and Morty. Browse through locations, view detailed character profiles, and manage your favorites. Stay connected with your favorite characters from the multiverse!",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

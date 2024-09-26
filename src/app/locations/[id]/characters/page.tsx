@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -15,7 +16,7 @@ const getLocationInfo = async (id: number): Promise<LocationDetail> => {
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/location/${id}`
   );
   if (!res.ok) {
-    throw new Error(`Failed to fetch character with ID: ${id}`);
+    notFound();
   }
   const data: LocationDetail = await res.json();
   return data;
@@ -31,6 +32,40 @@ const getCharacterDetailsByLocation = async (
   const verifyData: Character[] = Array.isArray(data) ? data : [data];
   return verifyData;
 };
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { id: number };
+  searchParams: { page?: number; status?: string };
+}) {
+  const location = await getLocationInfo(params.id);
+  const status = searchParams.status
+    ? `${searchParams.status.replace(
+        searchParams.status[0],
+        searchParams.status[0].toUpperCase()
+      )} - `
+    : "";
+
+  return {
+    title: status + location.name,
+    description: `Explore the ${searchParams.status || ""} characters of ${
+      location.name
+    }, a Planet located in ${
+      location.dimension
+    } from the Rick and Morty universe. Check out its residents and their journeys.`,
+    openGraph: {
+      title: status + location.name,
+      description: `Explore the ${searchParams.status || ""} characters of ${
+        location.name
+      }, a Planet located in ${
+        location.dimension
+      } from the Rick and Morty universe. Check out its residents and their journeys.`,
+      type: "website",
+    },
+  };
+}
 
 export default async function Page({
   params,
