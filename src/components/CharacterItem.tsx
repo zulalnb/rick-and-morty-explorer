@@ -37,6 +37,7 @@ export const CharacterItem = ({
           src={character.image}
           alt={character.name}
           fill
+          priority
           style={{
             position: "absolute",
             top: 0,

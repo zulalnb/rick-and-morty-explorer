@@ -115,6 +115,7 @@ export default async function Page({ params }: { params: { id: number } }) {
                           src={character.image}
                           alt={character.name}
                           fill
+                          priority
                           style={{
                             position: "absolute",
                             top: 0,
