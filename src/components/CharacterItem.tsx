@@ -53,6 +53,8 @@ export const CharacterItem = ({
             right: 10,
             zIndex: 2,
             color: isFavorite ? "red" : "white",
+            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.44)",
+            bgcolor: "rgba(0,0,0,0.11)",
           }}
         >
           <FavoriteIcon
