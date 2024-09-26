@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Character } from "@/types/character";
+import { usePathname } from "next/navigation";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,6 +12,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
+import { Character } from "@/types/character";
 
 export const CharacterItem = ({
   character,
@@ -23,12 +24,13 @@ export const CharacterItem = ({
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
+  const pathname = usePathname();
 
   return (
     <Grid
       key={character.id}
       flexShrink={{ xs: isDetail ? 1 : 0, md: 1 }}
-      size={{ xs: 12, md: isDetail ? 6 : 4 }}
+      size={{ xs: 12, md: isDetail || pathname === "/favorites" ? 6 : 4 }}
     >
       <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
         <Image

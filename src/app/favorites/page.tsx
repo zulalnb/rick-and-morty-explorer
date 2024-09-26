@@ -14,7 +14,7 @@ export default function Page({
 }) {
   const pathname = `/favorites`;
   const favorites = useAppSelector((state) => state.favorites);
-  const { paginatedArray, totalPages } = paginateItems(favorites);
+  const { paginatedArray, totalPages } = paginateItems(favorites, 2);
   const characters =
     paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
   return (
