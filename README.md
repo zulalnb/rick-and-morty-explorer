@@ -10,7 +10,7 @@ You can check out the live demo of this project here:
 
 - **Locations List:** View a paginated list of all locations from the Rick and Morty API.
 - **Location Characters:** View and filter characters from specific locations based on their status (alive, dead, unknown).
-- **Character Details:** Detailed view of each character, including species, origin, gender, and episodes they appeared in.
+- **Character Details:** Detailed view of each character, including species, origin, and gender.
 - **Favorites Management:** Add and remove characters from your personal "My Favorites" list, which is stored in Redux.
 - **Responsive Design:** Optimized for mobile and desktop devices.
   
