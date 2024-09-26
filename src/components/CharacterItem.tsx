@@ -67,8 +67,17 @@ export const CharacterItem = ({
           alignItems: "center",
         }}
       >
-        <Box>
-          <Typography sx={{ fontWeight: "bold", color: "gray", fontSize: 24 }}>
+        <Box sx={{ overflow: "hidden" }}>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              color: "gray",
+              fontSize: 24,
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+          >
             {character.name}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
