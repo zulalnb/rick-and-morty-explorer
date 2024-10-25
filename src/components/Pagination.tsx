@@ -26,6 +26,7 @@ export const Pagination = ({
     <MUIPagination
       sx={(theme: Theme) => ({
         mt: 12,
+        mb: 2,
         [theme.breakpoints.up("md")]: {
           mt: 8,
         },

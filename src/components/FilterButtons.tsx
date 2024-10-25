@@ -1,13 +1,15 @@
 "use client";
 
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import CircleIcon from "@mui/icons-material/Circle";
 import Container from "@mui/material/Container";
 import { Theme } from "@mui/material/styles";
+import { FilterButton } from "./FilterButton";
 
 export const FilterButtons = ({ locationId }: { locationId: number }) => {
+  const searchParams = useSearchParams();
+  const activeStatus = searchParams.get("status");
+
   return (
     <Container
       sx={(theme: Theme) => ({
@@ -29,36 +31,36 @@ export const FilterButtons = ({ locationId }: { locationId: number }) => {
           },
         })}
       >
-        <Button
-          component={Link}
-          href={`/locations/${locationId}/characters/?status=dead`}
-          startIcon={<CircleIcon color="error" />}
-          variant="outlined"
-          color="inherit"
-          sx={{ textTransform: "initial", width: 130, minWidth: 130 }}
-        >
-          Dead
-        </Button>
-        <Button
-          component={Link}
-          href={`/locations/${locationId}/characters/?status=alive`}
-          startIcon={<CircleIcon color="success" />}
-          variant="outlined"
-          color="inherit"
-          sx={{ textTransform: "initial", width: 130, minWidth: 130 }}
-        >
-          Alive
-        </Button>
-        <Button
-          component={Link}
-          href={`/locations/${locationId}/characters/?status=unknown`}
-          startIcon={<CircleIcon color="disabled" />}
-          variant="outlined"
-          color="inherit"
-          sx={{ textTransform: "initial", width: 130, minWidth: 130 }}
-        >
-          Unknown
-        </Button>
+        <FilterButton
+          href={
+            activeStatus === "dead"
+              ? `/locations/${locationId}/characters`
+              : `/locations/${locationId}/characters/?status=dead`
+          }
+          title="Dead"
+          iconColor="error"
+          isActive={activeStatus === "dead"}
+        />
+        <FilterButton
+          href={
+            activeStatus === "alive"
+              ? `/locations/${locationId}/characters`
+              : `/locations/${locationId}/characters/?status=alive`
+          }
+          title="Alive"
+          iconColor="success"
+          isActive={activeStatus === "alive"}
+        />
+        <FilterButton
+          href={
+            activeStatus === "unknown"
+              ? `/locations/${locationId}/characters`
+              : `/locations/${locationId}/characters/?status=unknown`
+          }
+          title="Unknown"
+          iconColor="disabled"
+          isActive={activeStatus === "unknown"}
+        />
       </Box>
     </Container>
   );
