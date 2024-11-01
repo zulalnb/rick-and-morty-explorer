@@ -27,29 +27,30 @@ You can check out the live demo of this project here:
 
 To set up the project locally, follow these steps:
 
-Clone the repository:
-```bash
-   git clone https://github.com/zulalnb/rick-and-morty-explorer.git
-   cd rick-and-morty-explorer
-```
+1. Clone the repository:
+   
+    ```bash
+    git clone https://github.com/zulalnb/rick-and-morty-explorer.git
+    cd rick-and-morty-explorer
+    ```
 
-Create a .env file in the root of your project and add your API key to the .env file:
+3. Create a .env file in the root of your project and add your API key to the .env file:
 
-```bash
-NEXT_PUBLIC_BASE_API_URL=https://rickandmortyapi.com/api
-```
+    ```bash
+    NEXT_PUBLIC_BASE_API_URL=https://rickandmortyapi.com/api
+    ```
 
-Install dependencies
+3. Install dependencies
 
-```bash
-  npm install
-```
+    ```bash
+    npm install
+    ```
 
-Run the development server:
+4. Run the development server:
 
-```bash
-  npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
