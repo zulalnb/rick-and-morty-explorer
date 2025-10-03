@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import { Location } from "@/types/location";
 import { LocationSkeleton } from "./LocationSkeleton";
 

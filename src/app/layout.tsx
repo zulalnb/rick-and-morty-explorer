@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
 import StoreProvider from "./StoreProvider";
 import "./globals.css";
 import theme from "@/theme";
@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={roboto.variable}>
+    <html lang="en" className={roboto.variable}>
+      <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <StoreProvider>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";

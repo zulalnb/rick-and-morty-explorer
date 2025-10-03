@@ -1,7 +1,7 @@
 "use client";
 
 import Skeleton from "@mui/material/Skeleton";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 
 export const LocationSkeleton = () => {
   return (
