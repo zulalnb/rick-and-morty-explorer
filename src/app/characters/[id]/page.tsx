@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Character } from "@/types/character";
@@ -47,7 +47,9 @@ const getOtherCharacters = async (
   return otherCharacters;
 };
 
-export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
+export async function generateMetadata(props: {
+  params: Promise<{ id: number }>;
+}) {
   const params = await props.params;
   const character = await getCharacterDetail(params.id);
 

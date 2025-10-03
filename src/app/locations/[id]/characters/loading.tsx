@@ -2,7 +2,7 @@ import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 
 export default function Loading() {
   // Or a custom loading skeleton component
