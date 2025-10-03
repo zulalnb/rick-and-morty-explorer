@@ -30,7 +30,7 @@ export const CharacterItem = ({
     <Grid
       key={character.id}
       flexShrink={{ xs: isDetail ? 1 : 0, md: 1 }}
-      size={{ xs: 12, md: isDetail || pathname === "/favorites" ? 6 : 4 }}
+      size={{ xs: 12, md: isDetail || pathname === "/favorites/" ? 6 : 4 }}
     >
       <Box sx={{ position: "relative" }}>
         <CharacterImageWrapper
