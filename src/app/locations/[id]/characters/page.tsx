@@ -33,13 +33,14 @@ const getCharacterDetailsByLocation = async (
   return verifyData;
 };
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { id: number };
-  searchParams: { page?: number; status?: string };
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id: number }>;
+    searchParams: Promise<{ page?: number; status?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const location = await getLocationInfo(params.id);
   const status = searchParams.status
     ? `${searchParams.status.replace(
@@ -67,13 +68,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: number };
-  searchParams: { page?: number; status?: string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: number }>;
+    searchParams: Promise<{ page?: number; status?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const locationInfo = await getLocationInfo(params.id);
 
   const queryParams = searchParams.status

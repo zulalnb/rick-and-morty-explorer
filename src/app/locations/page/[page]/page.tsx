@@ -12,7 +12,8 @@ const getLocations = async (page: number = 1): Promise<LocationAPIResponse> => {
   return data;
 };
 
-export default async function Page({ params }: { params: { page: number } }) {
+export default async function Page(props: { params: Promise<{ page: number }> }) {
+  const params = await props.params;
   const locations = await getLocations(params.page);
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>

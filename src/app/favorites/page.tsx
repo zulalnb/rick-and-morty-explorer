@@ -15,11 +15,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams: { page?: number };
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ page?: number }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   return (
     <main>
       <Container sx={{ marginY: 4 }}>

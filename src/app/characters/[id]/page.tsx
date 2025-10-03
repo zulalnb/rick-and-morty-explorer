@@ -47,7 +47,8 @@ const getOtherCharacters = async (
   return otherCharacters;
 };
 
-export async function generateMetadata({ params }: { params: { id: number } }) {
+export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   const character = await getCharacterDetail(params.id);
 
   return {
@@ -62,7 +63,8 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   };
 }
 
-export default async function Page({ params }: { params: { id: number } }) {
+export default async function Page(props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   const character = await getCharacterDetail(params.id);
   const location = character
     ? await getLocation(character.location.url)

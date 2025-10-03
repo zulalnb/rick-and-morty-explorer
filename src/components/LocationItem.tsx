@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Location } from "@/types/location";
 
@@ -40,30 +41,32 @@ export const LocationItem = ({ location }: { location: Location }) => {
       >
         <Box sx={{ flexGrow: 3, overflow: "hidden" }}>
           <Table sx={{ "th, td": { border: 0 } }}>
-            <TableRow>
-              <StyledTableHead component="th" scope="row">
-                Name:
-              </StyledTableHead>
-              <StyledTableCell>{location.name}</StyledTableCell>
-            </TableRow>
-            <TableRow>
-              <StyledTableHead component="th" scope="row">
-                Type:
-              </StyledTableHead>
-              <StyledTableCell>{location.type}</StyledTableCell>
-            </TableRow>
-            <TableRow>
-              <StyledTableHead component="th" scope="row">
-                Dimension:
-              </StyledTableHead>
-              <StyledTableCell>{location.dimension || "-"}</StyledTableCell>
-            </TableRow>
-            <TableRow>
-              <StyledTableHead component="th" scope="row">
-                Resident count:
-              </StyledTableHead>
-              <StyledTableCell>{location.residents.length}</StyledTableCell>
-            </TableRow>
+            <TableBody>
+              <TableRow>
+                <StyledTableHead component="th" scope="row">
+                  Name:
+                </StyledTableHead>
+                <StyledTableCell>{location.name}</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableHead component="th" scope="row">
+                  Type:
+                </StyledTableHead>
+                <StyledTableCell>{location.type}</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableHead component="th" scope="row">
+                  Dimension:
+                </StyledTableHead>
+                <StyledTableCell>{location.dimension || "-"}</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableHead component="th" scope="row">
+                  Resident count:
+                </StyledTableHead>
+                <StyledTableCell>{location.residents.length}</StyledTableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </Box>
 
