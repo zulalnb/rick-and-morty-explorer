@@ -1,87 +1,124 @@
 "use client";
 
 import Link from "next/link";
-import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
+import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Location } from "@/types/location";
 
-const StyledTableCell = styled(TableCell)({
-  padding: "8px 12px",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-});
-
-const StyledTableHead = styled(StyledTableCell)(({ theme }) => ({
-  width: "40%",
-  fontWeight: "bold",
-  whiteSpace: "nowrap",
-  [theme.breakpoints.down("sm")]: {
-    width: "30%",
-  },
-}));
-
 export const LocationItem = ({ location }: { location: Location }) => {
   return (
-    <Grid size={{ xs: 12, md: 6 }}>
+    <Grid component="li" size={{ xs: 12, md: 6 }}>
       <Stack
         sx={{
           border: "1px solid black",
           flexDirection: "row",
-          borderRadius: 4,
-          padding: 2,
+          borderRadius: 8,
+          padding: "8px 20px",
         }}
       >
-        <Box sx={{ flexGrow: 3, overflow: "hidden" }}>
-          <Table sx={{ "th, td": { border: 0 } }}>
-            <TableBody>
-              <TableRow>
-                <StyledTableHead component="th" scope="row">
-                  Name:
-                </StyledTableHead>
-                <StyledTableCell>{location.name}</StyledTableCell>
-              </TableRow>
-              <TableRow>
-                <StyledTableHead component="th" scope="row">
-                  Type:
-                </StyledTableHead>
-                <StyledTableCell>{location.type}</StyledTableCell>
-              </TableRow>
-              <TableRow>
-                <StyledTableHead component="th" scope="row">
-                  Dimension:
-                </StyledTableHead>
-                <StyledTableCell>{location.dimension || "-"}</StyledTableCell>
-              </TableRow>
-              <TableRow>
-                <StyledTableHead component="th" scope="row">
-                  Resident count:
-                </StyledTableHead>
-                <StyledTableCell>{location.residents.length}</StyledTableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            minWidth: 0,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "baseline",
+              gap: 1,
+            }}
+          >
+            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+              Name:
+            </Typography>
+            <Typography
+              sx={{
+                flex: 3,
+              }}
+            >
+              {location.name || "-"}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "baseline",
+              gap: 1,
+            }}
+          >
+            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+              Type:
+            </Typography>
+            <Typography
+              sx={{
+                flex: 3,
+              }}
+            >
+              {location.type || "-"}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "baseline",
+              gap: 1,
+            }}
+          >
+            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+              Dimension:
+            </Typography>
+            <Typography
+              sx={{
+                flex: 3,
+              }}
+            >
+              {location.dimension || "-"}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "baseline",
+              gap: 1,
+            }}
+          >
+            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+              Resident count:
+            </Typography>
+            <Typography
+              sx={{
+                flex: 3,
+              }}
+            >
+              {location.residents.length}
+            </Typography>
+          </Box>
         </Box>
 
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            flexGrow: 1,
-            justifyContent: "flex-end",
-            marginLeft: 2,
-            // width: "10%",
+            flexShrink: 0,
+            marginLeft: { xs: 0.5, sm: 2 },
           }}
         >
           <Link href={`/locations/${location.id}/characters`}>
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon fontSize="large" />
           </Link>
         </Box>
       </Stack>

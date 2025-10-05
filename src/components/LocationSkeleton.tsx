@@ -7,16 +7,22 @@ export const LocationSkeleton = () => {
   return (
     <Grid
       size={{ xs: 12, md: 6 }}
+      display="flex"
+      flexDirection="column"
+      gap={1}
       sx={{
         border: "1px solid rgba(0, 0, 0, 0.2)",
-        borderRadius: 4,
-        padding: 2,
+        borderRadius: 8,
+        padding: "8px 20px",
       }}
     >
-      <Skeleton variant="text" sx={{ fontSize: "1.75rem" }} />
-      <Skeleton variant="text" sx={{ fontSize: "1.75rem" }} />
-      <Skeleton variant="text" sx={{ fontSize: "1.75rem" }} />
-      <Skeleton variant="text" sx={{ fontSize: "1.75rem" }} />
+      {Array.from(Array(4)).map((_, index) => (
+        <Skeleton
+          key={index}
+          variant="text"
+          sx={{ fontSize: "1rem", lineHeight: 1.5 }}
+        />
+      ))}
     </Grid>
   );
 };

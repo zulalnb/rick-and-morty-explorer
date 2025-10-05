@@ -1,5 +1,6 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { visuallyHidden } from "@mui/utils";
 import { LocationList } from "@/components/LocationList";
 import { Pagination } from "@/components/Pagination";
 
@@ -15,20 +16,7 @@ export default async function Page() {
   const locations = await getLocations();
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>
-      <Typography
-        variant="h1"
-        sx={{
-          position: "absolute",
-          width: "1px",
-          height: "1px",
-          p: 0,
-          margin: "-1px",
-          overflow: "hidden",
-          clip: "rect(0, 0, 0, 0)",
-          whiteSpace: "nowrap",
-          borderWidth: 0,
-        }}
-      >
+      <Typography variant="h1" sx={visuallyHidden}>
         Locations
       </Typography>
       {locations.results && (

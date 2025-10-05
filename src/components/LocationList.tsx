@@ -16,7 +16,12 @@ export const LocationList = ({
   locations: readonly Location[];
 }) => {
   return (
-    <Grid container spacing={{ xs: 4, md: 8 }}>
+    <Grid
+      container
+      component="ul"
+      spacing={{ xs: 4, md: 8 }}
+      sx={{ listStyle: "none" }}
+    >
       {locations.map((location) => (
         <LocationItem key={location.id} location={location} />
       ))}
