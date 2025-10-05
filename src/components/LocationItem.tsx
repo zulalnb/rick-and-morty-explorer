@@ -11,117 +11,117 @@ import { Location } from "@/types/location";
 export const LocationItem = ({ location }: { location: Location }) => {
   return (
     <Grid component="li" size={{ xs: 12, md: 6 }}>
-      <Stack
-        sx={{
-          border: "1px solid black",
-          flexDirection: "row",
-          borderRadius: 8,
-          padding: "8px 20px",
-        }}
-      >
-        <Box
+      <Link href={`/locations/${location.id}/characters`}>
+        <Stack
           sx={{
-            flexGrow: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: 1,
-            minWidth: 0,
+            border: "1px solid black",
+            flexDirection: "row",
+            borderRadius: 8,
+            padding: "8px 20px",
           }}
         >
           <Box
             sx={{
+              flexGrow: 1,
               display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
+              flexDirection: "column",
               gap: 1,
+              minWidth: 0,
             }}
           >
-            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
-              Name:
-            </Typography>
-            <Typography
+            <Box
               sx={{
-                flex: 3,
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                gap: 1,
               }}
             >
-              {location.name || "-"}
-            </Typography>
+              <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+                Name:
+              </Typography>
+              <Typography
+                sx={{
+                  flex: 3,
+                }}
+              >
+                {location.name || "-"}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                gap: 1,
+              }}
+            >
+              <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+                Type:
+              </Typography>
+              <Typography
+                sx={{
+                  flex: 3,
+                }}
+              >
+                {location.type || "-"}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                gap: 1,
+              }}
+            >
+              <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+                Dimension:
+              </Typography>
+              <Typography
+                sx={{
+                  flex: 3,
+                }}
+              >
+                {location.dimension || "-"}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                gap: 1,
+              }}
+            >
+              <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
+                Resident count:
+              </Typography>
+              <Typography
+                sx={{
+                  flex: 3,
+                }}
+              >
+                {location.residents.length}
+              </Typography>
+            </Box>
           </Box>
 
           <Box
             sx={{
               display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
-              gap: 1,
+              alignItems: "center",
+              flexShrink: 0,
+              marginLeft: { xs: 0.5, sm: 2 },
             }}
           >
-            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
-              Type:
-            </Typography>
-            <Typography
-              sx={{
-                flex: 3,
-              }}
-            >
-              {location.type || "-"}
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
-              gap: 1,
-            }}
-          >
-            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
-              Dimension:
-            </Typography>
-            <Typography
-              sx={{
-                flex: 3,
-              }}
-            >
-              {location.dimension || "-"}
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "baseline",
-              gap: 1,
-            }}
-          >
-            <Typography fontWeight="bold" sx={{ flex: 2, minWidth: 82 }}>
-              Resident count:
-            </Typography>
-            <Typography
-              sx={{
-                flex: 3,
-              }}
-            >
-              {location.residents.length}
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            flexShrink: 0,
-            marginLeft: { xs: 0.5, sm: 2 },
-          }}
-        >
-          <Link href={`/locations/${location.id}/characters`}>
             <ArrowForwardIosIcon fontSize="large" />
-          </Link>
-        </Box>
-      </Stack>
+          </Box>
+        </Stack>
+      </Link>
     </Grid>
   );
 };

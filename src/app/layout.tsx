@@ -3,8 +3,9 @@ import { Roboto } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import GlobalStyles from "@mui/material/GlobalStyles";
 import StoreProvider from "./StoreProvider";
-import "./globals.css";
+// import "./globals.css";
 import theme from "@/theme";
 import { Header } from "@/components/Header";
 
@@ -42,6 +43,14 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <StoreProvider>
               <CssBaseline />
+              <GlobalStyles
+                styles={{
+                  a: {
+                    textDecoration: "inherit",
+                    color: "inherit",
+                  },
+                }}
+              />
               <Header />
               {children}
             </StoreProvider>

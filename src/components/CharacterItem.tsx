@@ -91,7 +91,7 @@ export const CharacterItem = ({
             </Typography>
           </Box>
           {isDetail && (
-            <Typography bgcolor="slategrey" fontStyle="italic">
+            <Typography fontStyle="italic">
               {character.location.name}
             </Typography>
           )}
