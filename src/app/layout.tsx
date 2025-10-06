@@ -49,6 +49,11 @@ export default function RootLayout({
                     textDecoration: "inherit",
                     color: "inherit",
                   },
+                  ul: {
+                    margin: 0,
+                    padding: 0,
+                    listStyle: "none",
+                  },
                 }}
               />
               <Header />
