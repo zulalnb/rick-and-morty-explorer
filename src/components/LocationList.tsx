@@ -7,7 +7,7 @@ import { LocationSkeleton } from "./LocationSkeleton";
 
 const LocationItem = dynamic(
   () => import("./LocationItem").then((m) => m.LocationItem),
-  { ssr: false, loading: () => <LocationSkeleton /> }
+  { ssr: false, loading: () => <LocationSkeleton component="li" /> }
 );
 
 export const LocationList = ({
@@ -16,14 +16,9 @@ export const LocationList = ({
   locations: readonly Location[];
 }) => {
   return (
-    <Grid
-      container
-      component="ul"
-      spacing={{ xs: 4, md: 8 }}
-      sx={{ listStyle: "none" }}
-    >
+    <Grid container component="ul" spacing={{ xs: 4, md: 8 }}>
       {locations.map((location) => (
-        <LocationItem key={location.id} location={location} />
+        <LocationItem key={location.id} location={location} component="li" />
       ))}
     </Grid>
   );

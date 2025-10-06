@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import Grid from "@mui/material/Grid";
+import Grid, { type GridProps } from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Location } from "@/types/location";
+interface LocationItemProps extends GridProps {
+  location: Location;
+}
 
-export const LocationItem = ({ location }: { location: Location }) => {
+export const LocationItem = ({ location, ...props }: LocationItemProps) => {
   return (
-    <Grid component="li" size={{ xs: 12, md: 6 }}>
+    <Grid size={{ xs: 12, md: 6 }} {...props}>
       <Link href={`/locations/${location.id}/characters`}>
         <Stack
           sx={{
@@ -112,9 +115,8 @@ export const LocationItem = ({ location }: { location: Location }) => {
 
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
               flexShrink: 0,
+              alignSelf: "center",
               marginLeft: { xs: 0.5, sm: 2 },
             }}
           >

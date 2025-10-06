@@ -3,7 +3,7 @@
 import Skeleton from "@mui/material/Skeleton";
 import Grid from "@mui/material/Grid";
 
-export const LocationSkeleton = () => {
+export const LocationSkeleton = ({ ...props }) => {
   return (
     <Grid
       size={{ xs: 12, md: 6 }}
@@ -15,6 +15,7 @@ export const LocationSkeleton = () => {
         borderRadius: 8,
         padding: "8px 20px",
       }}
+      {...props}
     >
       {Array.from(Array(4)).map((_, index) => (
         <Skeleton
