@@ -19,3 +19,16 @@ export const getRandomItems = <T>(
   const shuffledArray = [...array].sort(() => 0.5 - Math.random()); // Shuffle the array
   return shuffledArray.slice(0, numberOfItems); // Return the first `numberOfItems` from the shuffled array
 };
+
+export const normalizePath = (path: string) => {
+  const segments = path.split("/").filter(Boolean);
+
+  if (
+    segments.length >= 2 &&
+    segments.at(-2) === "page" &&
+    !isNaN(Number(segments.at(-1)))
+  ) {
+    return "/" + segments.slice(0, -2).join("/");
+  }
+  return "/" + segments.join("/");
+};

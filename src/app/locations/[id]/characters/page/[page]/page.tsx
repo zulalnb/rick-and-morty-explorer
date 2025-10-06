@@ -4,8 +4,6 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import { visuallyHidden } from "@mui/utils";
-
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
@@ -36,7 +34,7 @@ const getCharacterDetailsByLocation = async (
 };
 
 export async function generateMetadata(props: {
-  params: Promise<{ page?: number; id: number }>;
+  params: Promise<{ id: number; page?: number }>;
   searchParams: Promise<{ status?: string }>;
 }) {
   const searchParams = await props.searchParams;
@@ -69,8 +67,8 @@ export async function generateMetadata(props: {
 }
 
 export default async function Page(props: {
-  params: Promise<{ id: number }>;
-  searchParams: Promise<{ page?: number; status?: string }>;
+  params: Promise<{ id: number; page?: number }>;
+  searchParams: Promise<{ status?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -94,13 +92,25 @@ export default async function Page(props: {
 
   const { paginatedArray, totalPages } = paginateItems(filteredCharacters);
 
-  const characters =
-    paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
+  const characters = paginatedArray[params.page ? params.page - 1 : 0];
 
   return (
     <main>
       <Container>
-        <Typography variant="h1" sx={visuallyHidden}>
+        <Typography
+          variant="h1"
+          sx={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            p: 0,
+            margin: "-1px",
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            borderWidth: 0,
+          }}
+        >
           Characters
         </Typography>
       </Container>
@@ -134,7 +144,7 @@ export default async function Page(props: {
       {characters && (
         <>
           <CharacterList characters={characters} />
-          <Pagination count={totalPages} currentPage={1} />
+          <Pagination count={totalPages} currentPage={Number(params.page)} />
         </>
       )}
     </main>

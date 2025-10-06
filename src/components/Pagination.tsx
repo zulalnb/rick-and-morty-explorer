@@ -1,26 +1,24 @@
 "use client";
 
+import { Suspense } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Theme } from "@mui/material";
+import { type Theme } from "@mui/material";
 import MUIPagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import { normalizePath } from "@/lib/utils";
 
-export const Pagination = ({
+const PaginationContent = ({
   count,
   currentPage,
-  pathname,
-  isQueryParam = false,
 }: {
   count: number;
   currentPage: number;
-  pathname: string;
-  isQueryParam?: boolean;
 }) => {
-  const pathPrefix = !isQueryParam
-    ? `${pathname}/page/`
-    : pathname.includes("status")
-    ? `${pathname}&page=`
-    : `${pathname}/?page=`;
+  const pathname = usePathname();
+  const basePath = normalizePath(pathname);
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
 
   return (
     <MUIPagination
@@ -35,7 +33,6 @@ export const Pagination = ({
           color: "white",
           backgroundColor: "black !important",
           userSelect: "text",
-
           "&:hover": {
             color: "white",
             backgroundColor: "black",
@@ -46,10 +43,15 @@ export const Pagination = ({
       count={count}
       page={currentPage}
       renderItem={(item) => {
+        const base =
+          basePath === "/"
+            ? `/page/${item.page}`
+            : `${basePath}/page/${item.page}`;
+        const href = status ? `${base}/?status=${status}` : base;
         return (
           <PaginationItem
             component={item.page === currentPage ? "span" : Link}
-            href={`${pathPrefix}${item.page}`}
+            href={href}
             {...item}
           />
         );
@@ -57,3 +59,9 @@ export const Pagination = ({
     />
   );
 };
+
+export const Pagination = (props: { count: number; currentPage: number }) => (
+  <Suspense fallback={null}>
+    <PaginationContent {...props} />
+  </Suspense>
+);

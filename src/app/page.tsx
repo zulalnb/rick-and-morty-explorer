@@ -22,11 +22,7 @@ export default async function Page() {
       {locations.results && (
         <>
           <LocationList locations={locations.results} />
-          <Pagination
-            count={locations.info.pages}
-            currentPage={1}
-            pathname="locations"
-          />
+          <Pagination count={locations.info.pages} currentPage={1} />
         </>
       )}
     </Container>

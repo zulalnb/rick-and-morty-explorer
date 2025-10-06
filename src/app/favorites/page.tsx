@@ -15,12 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page(
-  props: {
-    searchParams: Promise<{ page?: number }>;
-  }
-) {
-  const searchParams = await props.searchParams;
+export default async function Page() {
   return (
     <main>
       <Container sx={{ marginY: 4 }}>
@@ -40,7 +35,7 @@ export default async function Page(
         >
           Favorites
         </Typography>
-        <FavoriteCharacterList page={Number(searchParams.page)} />
+        <FavoriteCharacterList />
       </Container>
     </main>
   );
