@@ -21,6 +21,7 @@ export const LocationItem = ({ location, ...props }: LocationItemProps) => {
             flexDirection: "row",
             borderRadius: 8,
             padding: "8px 20px",
+            height: "100%",
           }}
         >
           <Box
