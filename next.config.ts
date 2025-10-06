@@ -5,12 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "logos-world.net",
-        port: "",
-        pathname: "/wp-content/**",
-      },
-      {
         protocol: "http",
         hostname: "rickandmortyapi.com",
         port: "",

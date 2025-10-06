@@ -36,7 +36,7 @@ export const Header = () => {
         )}
         <Link href="/">
           <Image
-            src="https://logos-world.net/wp-content/uploads/2022/01/Rick-And-Morty-Symbol.png"
+            src="/assets/images/logo.png"
             alt="rick and morty"
             priority
             width={210}
