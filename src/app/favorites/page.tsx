@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { visuallyHidden } from "@mui/utils";
 import { FavoriteCharacterList } from "@/components/FavoriteCharacterList";
 
 export const metadata: Metadata = {
@@ -19,20 +20,7 @@ export default async function Page() {
   return (
     <main>
       <Container sx={{ marginY: 4 }}>
-        <Typography
-          variant="h1"
-          sx={{
-            position: "absolute",
-            width: "1px",
-            height: "1px",
-            p: 0,
-            margin: "-1px",
-            overflow: "hidden",
-            clip: "rect(0, 0, 0, 0)",
-            whiteSpace: "nowrap",
-            borderWidth: 0,
-          }}
-        >
+        <Typography variant="h1" sx={visuallyHidden}>
           Favorites
         </Typography>
         <FavoriteCharacterList />

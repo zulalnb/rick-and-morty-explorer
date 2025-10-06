@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
+import { visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
@@ -97,20 +98,7 @@ export default async function Page(props: {
   return (
     <main>
       <Container>
-        <Typography
-          variant="h1"
-          sx={{
-            position: "absolute",
-            width: "1px",
-            height: "1px",
-            p: 0,
-            margin: "-1px",
-            overflow: "hidden",
-            clip: "rect(0, 0, 0, 0)",
-            whiteSpace: "nowrap",
-            borderWidth: 0,
-          }}
-        >
+        <Typography variant="h1" sx={visuallyHidden}>
           Characters
         </Typography>
       </Container>
