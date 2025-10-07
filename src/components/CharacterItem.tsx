@@ -64,14 +64,18 @@ export const CharacterItem = ({
           alignItems: "center",
         }}
       >
-        <Box>
+        <Box sx={{ overflow: "hidden" }}>
           <Typography
+            component={Link}
+            href={`/characters/${character.id}`}
             sx={{
               fontWeight: "bold",
               color: "gray",
               fontSize: 24,
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
+              overflow: "hidden",
+              display: "block",
             }}
           >
             {character.name}
@@ -102,9 +106,7 @@ export const CharacterItem = ({
             {character.type || "-"} / {character.gender}
           </Typography>
         ) : (
-          <Link href={`/characters/${character.id}`}>
-            <ArrowForwardIosIcon />
-          </Link>
+          <ArrowForwardIosIcon />
         )}
       </Box>
     </Grid>
