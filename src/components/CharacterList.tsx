@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Theme } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -13,16 +12,7 @@ export const CharacterList = ({
 }: {
   characters: readonly Character[];
 }) => {
-  const searchParams = useSearchParams();
-  const scrollRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = 0;
-      scrollRef.current.scrollTop = 0;
-    }
-  }, [searchParams]);
 
   return (
     <Container
@@ -33,7 +23,6 @@ export const CharacterList = ({
       })}
     >
       <Grid
-        ref={scrollRef}
         container
         spacing={{ xs: 4, md: 8 }}
         flexWrap={{
@@ -43,7 +32,7 @@ export const CharacterList = ({
         px={{ xs: 2, md: 0 }}
         sx={{
           ...(pathname !== "/favorites/" && {
-            overflowX: "scroll",
+            overflowX: "auto",
             WebkitOverflowScrolling: "touch",
           }),
         }}
