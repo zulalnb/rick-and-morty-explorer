@@ -24,9 +24,9 @@ export const FilterButton = ({
       color="inherit"
       sx={{
         textTransform: "initial",
-        width: 130,
-        height: 38,
-        minWidth: 130,
+        width: 120,
+        height: 36,
+        minWidth: 120,
         border: isActive ? "5px solid #02afc5" : "1px solid #000",
       }}
     >

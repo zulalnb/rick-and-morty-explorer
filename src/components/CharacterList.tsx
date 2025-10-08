@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Theme } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -15,6 +15,7 @@ export const CharacterList = ({
 }) => {
   const searchParams = useSearchParams();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -35,15 +36,29 @@ export const CharacterList = ({
         ref={scrollRef}
         container
         spacing={{ xs: 4, md: 8 }}
-        flexWrap={{ xs: "nowrap", md: "wrap" }}
+        flexWrap={{
+          xs: pathname === "/favorites/" ? "wrap" : "nowrap",
+          md: "wrap",
+        }}
         px={{ xs: 2, md: 0 }}
         sx={{
-          overflowX: "scroll",
-          WebkitOverflowScrolling: "touch",
+          ...(pathname !== "/favorites/" && {
+            overflowX: "scroll",
+            WebkitOverflowScrolling: "touch",
+          }),
         }}
       >
         {characters.map((character) => (
-          <CharacterItem key={character.id} character={character} />
+          <Grid
+            key={character.id}
+            size={{
+              xs: 12,
+              md: pathname === "/favorites/" ? 6 : 4,
+            }}
+            flexShrink={{ xs: 0, md: 1 }}
+          >
+            <CharacterItem character={character} />
+          </Grid>
         ))}
       </Grid>
     </Container>

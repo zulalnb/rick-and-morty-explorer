@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -24,14 +22,9 @@ export const CharacterItem = ({
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
-  const pathname = usePathname();
 
   return (
-    <Grid
-      key={character.id}
-      flexShrink={{ xs: isDetail ? 1 : 0, md: 1 }}
-      size={{ xs: 12, md: isDetail || pathname === "/favorites/" ? 6 : 4 }}
-    >
+    <Box>
       <Box sx={{ position: "relative" }}>
         <CharacterImageWrapper
           src={character.image}
@@ -109,6 +102,6 @@ export const CharacterItem = ({
           <ArrowForwardIosIcon />
         )}
       </Box>
-    </Grid>
+    </Box>
   );
 };

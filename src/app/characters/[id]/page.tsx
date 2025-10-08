@@ -93,7 +93,11 @@ export default async function Page(props: { params: Promise<{ id: number }> }) {
     <main>
       <Container sx={{ marginY: 4 }}>
         <Grid container spacing={{ xs: 6, md: 8 }}>
-          {character && <CharacterItem character={character} isDetail />}
+          {character && (
+            <Grid size={{ xs: 12, md: 6 }}>
+              <CharacterItem character={character} isDetail />
+            </Grid>
+          )}
           {otherCharacters.length > 0 && (
             <Grid size={{ xs: 12, md: 6 }}>
               <Box>
