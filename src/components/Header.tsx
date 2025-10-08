@@ -7,12 +7,19 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useCameFromOutside } from "@/hooks/useCameFromOutside";
 import { normalizePath } from "@/lib/utils";
 
 export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const basePath = normalizePath(pathname);
+
+  const isExternalEntry = useCameFromOutside();
+  const handleBack = () => {
+    if (isExternalEntry) router.push("/");
+    else router.back();
+  };
 
   return (
     <Container>
@@ -21,7 +28,7 @@ export const Header = () => {
       >
         {basePath !== "/" && (
           <IconButton
-            onClick={() => router.back()}
+            onClick={handleBack}
             sx={{
               position: "absolute",
               left: 0,
