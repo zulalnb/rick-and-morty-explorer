@@ -3,8 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { Theme } from "@mui/material/styles";
 import { FilterButton } from "./FilterButton";
+
+const STATUS_FILTERS = [
+  { key: "dead", color: "error", label: "Dead" },
+  { key: "alive", color: "success", label: "Alive" },
+  { key: "unknown", color: "disabled", label: "Unknown" },
+] as const;
 
 export const FilterButtons = ({ locationId }: { locationId: number }) => {
   const searchParams = useSearchParams();
@@ -12,14 +17,14 @@ export const FilterButtons = ({ locationId }: { locationId: number }) => {
 
   return (
     <Container
-      sx={(theme: Theme) => ({
+      sx={(theme) => ({
         [theme.breakpoints.down("sm")]: {
           paddingX: 0,
         },
       })}
     >
       <Box
-        sx={(theme: Theme) => ({
+        sx={(theme) => ({
           marginBottom: 3,
           display: "flex",
           gap: 2,
@@ -31,36 +36,19 @@ export const FilterButtons = ({ locationId }: { locationId: number }) => {
           },
         })}
       >
-        <FilterButton
-          href={
-            activeStatus === "dead"
-              ? `/locations/${locationId}/characters`
-              : `/locations/${locationId}/characters/?status=dead`
-          }
-          title="Dead"
-          iconColor="error"
-          isActive={activeStatus === "dead"}
-        />
-        <FilterButton
-          href={
-            activeStatus === "alive"
-              ? `/locations/${locationId}/characters`
-              : `/locations/${locationId}/characters/?status=alive`
-          }
-          title="Alive"
-          iconColor="success"
-          isActive={activeStatus === "alive"}
-        />
-        <FilterButton
-          href={
-            activeStatus === "unknown"
-              ? `/locations/${locationId}/characters`
-              : `/locations/${locationId}/characters/?status=unknown`
-          }
-          title="Unknown"
-          iconColor="disabled"
-          isActive={activeStatus === "unknown"}
-        />
+        {STATUS_FILTERS.map((status) => (
+          <FilterButton
+            key={status.key}
+            href={
+              activeStatus === status.key
+                ? `/locations/${locationId}/characters`
+                : `/locations/${locationId}/characters/?status=${status.key}`
+            }
+            title={status.label}
+            iconColor={status.color}
+            isActive={activeStatus === status.key}
+          />
+        ))}
       </Box>
     </Container>
   );

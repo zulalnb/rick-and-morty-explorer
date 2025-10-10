@@ -23,7 +23,7 @@ export const FilterButton = ({
       variant="outlined"
       color="inherit"
       sx={{
-        textTransform: "initial",
+        textTransform: "capitalize",
         width: 120,
         height: 36,
         minWidth: 120,
