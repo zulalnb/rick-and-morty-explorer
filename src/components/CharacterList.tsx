@@ -1,55 +1,76 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Theme } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import { CharacterItem } from "./CharacterItem";
 import { Character } from "@/types/character";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/a11y";
 
 export const CharacterList = ({
   characters,
 }: {
   characters: readonly Character[];
 }) => {
-  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const swiperPadding = isSmUp ? "0px" : "16px";
 
   return (
     <Container
-      sx={(theme: Theme) => ({
+      sx={(theme) => ({
         [theme.breakpoints.down("sm")]: {
           paddingX: 0,
         },
       })}
     >
-      <Grid
-        container
-        spacing={{ xs: 4, md: 8 }}
-        flexWrap={{
-          xs: pathname === "/favorites/" ? "wrap" : "nowrap",
-          md: "wrap",
+      <Swiper
+        key={searchParams.get("status") || "all"}
+        modules={[Pagination, A11y]}
+        pagination={{
+          el: ".custom-pagination",
+          clickable: true,
         }}
-        px={{ xs: 2, md: 0 }}
-        sx={{
-          ...(pathname !== "/favorites/" && {
-            overflowX: "auto",
-            WebkitOverflowScrolling: "touch",
-          }),
+        style={{ paddingLeft: swiperPadding, paddingRight: swiperPadding }}
+        breakpoints={{
+          [theme.breakpoints.values.xs]: {
+            slidesPerView: 1,
+            spaceBetween: 32,
+          },
+          [theme.breakpoints.values.sm]: {
+            slidesPerView: 3,
+            spaceBetween: 32,
+          },
+          [theme.breakpoints.values.md]: {
+            slidesPerView: 3,
+            spaceBetween: 64,
+          },
         }}
       >
         {characters.map((character) => (
-          <Grid
+          <SwiperSlide
             key={character.id}
-            size={{
-              xs: 12,
-              md: pathname === "/favorites/" ? 6 : 4,
+            style={{
+              width: "100%",
             }}
-            flexShrink={{ xs: 0, md: 1 }}
           >
             <CharacterItem character={character} />
-          </Grid>
+          </SwiperSlide>
         ))}
-      </Grid>
+      </Swiper>
+      <Box
+        className="custom-pagination"
+        sx={{ marginTop: 3, display: "flex", justifyContent: "center" }}
+      ></Box>
     </Container>
   );
 };
