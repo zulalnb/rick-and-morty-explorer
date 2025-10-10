@@ -5,7 +5,6 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 
 export default function Loading() {
-  // Or a custom loading skeleton component
   return (
     <Container sx={{ marginY: 4 }}>
       <Box
