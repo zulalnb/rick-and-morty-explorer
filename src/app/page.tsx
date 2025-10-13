@@ -1,16 +1,49 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
 import { LocationList } from "@/components/LocationList";
 import { Pagination } from "@/components/Pagination";
+import { LocationAPIResponse } from "@/types/location";
 
-const getLocations = async (page = 1) => {
+type Props = {
+  params: Promise<{ page: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+const getLocations = async (page = 1): Promise<LocationAPIResponse> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/location?page=${page}`
   );
-  const data = await res.json();
+  const data: LocationAPIResponse = await res.json();
   return data;
 };
+
+export async function generateMetadata(
+  { params: _params, searchParams: _searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const locations = await getLocations(1);
+  const totalPages = locations.info.pages;
+  const previousOpenGraph = (await parent).openGraph || {};
+
+  const title = `Explore ${totalPages} Pages of Rick and Morty Locations`;
+  const description = `Begin your journey through ${totalPages} pages of iconic locations in the Rick and Morty multiverse. Discover detailed character profiles and much more.`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      ...previousOpenGraph,
+      title,
+      description,
+      url: "/",
+    },
+  };
+}
 
 export default async function Page() {
   const locations = await getLocations();

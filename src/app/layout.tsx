@@ -9,6 +9,13 @@ import StoreProvider from "./StoreProvider";
 import theme from "@/theme";
 import { Header } from "@/components/Header";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const NEXT_VERSION = process.env.NEXT_PUBLIC_NEXT_VERSION
+  ? `Next.js ${process.env.NEXT_PUBLIC_NEXT_VERSION}`
+  : "Next.js";
+const SITE_NAME =
+  process.env.NEXT_PUBLIC_SITE_NAME || "Rick and Morty Explorer";
+
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -17,17 +24,34 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    template: "%s | Rick and Morty Explorer",
-    default: "Rick and Morty Explorer | Discover Locations and Characters",
+    template: `%s | ${SITE_NAME}`,
+    default: `${SITE_NAME} | Discover Locations and Characters`,
   },
   description:
     "Explore the vast universe of Rick and Morty. Browse through locations, view detailed character profiles, and manage your favorites. Stay connected with your favorite characters from the multiverse!",
+  generator: NEXT_VERSION,
+  applicationName: SITE_NAME,
+  formatDetection: { telephone: false, address: false, email: false },
+  keywords: [
+    "Rick and Morty Explorer",
+    "Rick and Morty",
+    "Rick and Morty API",
+    "Characters",
+    "Locations",
+    "Favorites",
+    "Multiverse",
+    "Universe",
+  ],
   openGraph: {
-    title: "Rick and Morty Explorer | Discover Locations and Characters",
+    title: `${SITE_NAME} | Discover Locations and Characters`,
     description:
       "Explore the vast universe of Rick and Morty. Browse through locations, view detailed character profiles, and manage your favorites. Stay connected with your favorite characters from the multiverse!",
     type: "website",
+    url: "/",
+    locale: "en_US",
+    siteName: SITE_NAME,
   },
 };
 

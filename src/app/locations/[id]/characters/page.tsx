@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
@@ -12,6 +13,11 @@ import { Pagination } from "@/components/Pagination";
 import { LocationDetail } from "@/types/locationDetail";
 import { Character } from "@/types/character";
 import { paginateItems } from "@/lib/utils";
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 const getLocationInfo = async (id: number): Promise<LocationDetail> => {
   const res = await fetch(
@@ -35,42 +41,37 @@ const getCharacterDetailsByLocation = async (
   return verifyData;
 };
 
-export async function generateMetadata(props: {
-  params: Promise<{ page?: number; id: number }>;
-  searchParams: Promise<{ status?: string }>;
-}) {
-  const searchParams = await props.searchParams;
-  const params = await props.params;
-  const location = await getLocationInfo(params.id);
-  const status = searchParams.status
-    ? `${searchParams.status.replace(
-        searchParams.status[0],
-        searchParams.status[0].toUpperCase()
-      )} - `
-    : "";
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const status = (await searchParams).status || "";
+  const { id } = await params;
+  const location = await getLocationInfo(Number(id));
+  const previousOpenGraph = (await parent).openGraph || {};
+  const title = status + location.name;
+  const description = `Explore the ${status} characters of ${location.name}, a Planet located in ${location.dimension} from the Rick and Morty universe. Check out its residents and their journeys.`;
+
+  const canonicalPath = `/locations/${id}/characters/`;
 
   return {
-    title: status + location.name,
-    description: `Explore the ${searchParams.status || ""} characters of ${
-      location.name
-    }, a Planet located in ${
-      location.dimension
-    } from the Rick and Morty universe. Check out its residents and their journeys.`,
+    title,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
-      title: status + location.name,
-      description: `Explore the ${searchParams.status || ""} characters of ${
-        location.name
-      }, a Planet located in ${
-        location.dimension
-      } from the Rick and Morty universe. Check out its residents and their journeys.`,
-      type: "website",
+      ...previousOpenGraph,
+      title,
+      description,
+      url: canonicalPath,
     },
   };
 }
 
 export default async function Page(props: {
-  params: Promise<{ id: number }>;
-  searchParams: Promise<{ page?: number; status?: string }>;
+  params: Promise<{ id: number; page?: number }>;
+  searchParams: Promise<{ status?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -94,8 +95,7 @@ export default async function Page(props: {
 
   const { paginatedArray, totalPages } = paginateItems(filteredCharacters);
 
-  const characters =
-    paginatedArray[searchParams.page ? searchParams.page - 1 : 0];
+  const characters = paginatedArray[params.page ? params.page - 1 : 0];
 
   return (
     <main>

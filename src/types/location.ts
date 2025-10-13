@@ -1,4 +1,3 @@
-// Define the structure for individual Location
 export interface Location {
   id: number;
   name: string;

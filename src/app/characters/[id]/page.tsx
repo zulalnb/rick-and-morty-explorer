@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
@@ -47,19 +48,23 @@ const getOtherCharacters = async (
   return otherCharacters;
 };
 
-export async function generateMetadata(props: {
-  params: Promise<{ id: number }>;
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id: number }>;
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const params = await props.params;
   const character = await getCharacterDetail(params.id);
+  const previousOpenGraph = (await parent).openGraph || {};
 
   return {
     title: character.name,
     description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
     openGraph: {
+      ...previousOpenGraph,
       title: `${character.name} | Rick and Morty Explorer`,
       description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
-      type: "website",
       images: [character.image],
     },
   };
