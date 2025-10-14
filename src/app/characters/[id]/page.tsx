@@ -11,6 +11,10 @@ import { getRandomItems } from "@/lib/utils";
 import { CharacterItem } from "@/components/CharacterItem";
 import { CharacterImageWrapper } from "@/components/CharacterImageWrapper";
 
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
 const getLocation = async (url: string): Promise<Location> => {
   const res = await fetch(url);
   const data: Location = await res.json();
@@ -49,30 +53,31 @@ const getOtherCharacters = async (
 };
 
 export async function generateMetadata(
-  props: {
-    params: Promise<{ id: number }>;
-  },
+  props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const params = await props.params;
-  const character = await getCharacterDetail(params.id);
+  const character = await getCharacterDetail(Number(params.id));
   const previousOpenGraph = (await parent).openGraph || {};
+
+  const description = `Uncover the full story of ${character.name}, a ${character.species} from the Rick and Morty universe. Explore their origin, current status, and last known location.`;
 
   return {
     title: character.name,
-    description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
+    description,
     openGraph: {
       ...previousOpenGraph,
       title: `${character.name} | Rick and Morty Explorer`,
-      description: `Explore details about ${character.name}, a character from the Rick and Morty universe. Learn about his species, origin, location.`,
+      description,
       images: [character.image],
     },
   };
 }
 
-export default async function Page(props: { params: Promise<{ id: number }> }) {
+export default async function Page(props: Props) {
   const params = await props.params;
-  const character = await getCharacterDetail(params.id);
+  const id = Number(params.id);
+  const character = await getCharacterDetail(id);
   const location = character
     ? await getLocation(character.location.url)
     : { residents: [], dimension: "" };
@@ -81,7 +86,7 @@ export default async function Page(props: { params: Promise<{ id: number }> }) {
     ? location.residents
         .filter((resident) => {
           const parts = resident.split("/");
-          return parseInt(parts[parts.length - 1], 10) !== Number(params.id);
+          return parseInt(parts[parts.length - 1], 10) !== id;
         })
         .map((resident) => {
           const parts = resident.split("/");

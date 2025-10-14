@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   title: "Favorites",
   description:
     "Discover and manage your favorite characters from the Rick and Morty universe. View character details, track their stories, and explore their adventures.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   openGraph: {
     title: "Favorites | Rick and Morty Explorer",
     description:
