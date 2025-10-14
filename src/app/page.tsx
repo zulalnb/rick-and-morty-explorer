@@ -23,12 +23,11 @@ export async function generateMetadata(
   { params: _params, searchParams: _searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const locations = await getLocations(1);
-  const totalPages = locations.info.pages;
   const previousOpenGraph = (await parent).openGraph || {};
 
-  const title = `Explore ${totalPages} Pages of Rick and Morty Locations`;
-  const description = `Begin your journey through ${totalPages} pages of iconic locations in the Rick and Morty multiverse. Discover detailed character profiles and much more.`;
+  const title = "All Rick and Morty Locations";
+  const description =
+    "Explore a complete list of all iconic locations from the Rick and Morty multiverse. Discover dimensions, see resident characters, and dive deep into the show's lore.";
 
   return {
     title,

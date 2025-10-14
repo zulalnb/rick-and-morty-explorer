@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import { visuallyHidden } from "@mui/utils";
+import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
@@ -44,12 +44,24 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const status = (await searchParams).status || "";
+  const query = await searchParams;
   const { id, page } = await params;
   const location = await getLocationInfo(Number(id));
   const previousOpenGraph = (await parent).openGraph || {};
-  const title = status + location.name;
-  const description = `Explore the ${status} characters of ${location.name}, a Planet located in ${location.dimension} from the Rick and Morty universe. Check out its residents and their journeys.`;
+
+  const status = Array.isArray(query.status)
+    ? query.status[0]
+    : query.status || "";
+
+  const title = `${capitalize(status)} Characters in ${
+    location.name
+  } - Page ${page}`;
+
+  const description = `List of ${status || "all"} characters from ${
+    location.name
+  }, a planet in the ${
+    location.dimension
+  } dimension (Page ${page}). Explore the residents from the Rick and Morty universe.`;
 
   const canonicalPath = `/locations/${id}/characters/page/${page}`;
 

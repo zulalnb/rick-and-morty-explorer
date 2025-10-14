@@ -27,14 +27,13 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const page = (await params).page;
   const currentPage = Number(page);
-  const locations = await getLocations(currentPage);
 
   const canonicalPath = `/page/${currentPage}`;
 
   const previousOpenGraph = (await parent).openGraph || {};
 
-  const title = `Locations - Page ${currentPage} of ${locations.info.pages}`;
-  const description = `Browse page ${currentPage} of locations from the Rick and Morty universe.`;
+  const title = `Rick and Morty Locations - Page ${currentPage}`;
+  const description = `Continue exploring iconic locations from the Rick and Morty universe on page ${currentPage}. Discover unique planets, dimensions, and the characters who inhabit them..`;
 
   return {
     title,
