@@ -139,7 +139,7 @@ export default async function Page(props: {
               </Link>
             </Box>
           </Container>
-          <FilterButtons locationId={params.id} />
+          <FilterButtons />
         </>
       )}
       {characters && (

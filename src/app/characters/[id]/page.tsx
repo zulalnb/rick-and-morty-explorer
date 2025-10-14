@@ -113,66 +113,64 @@ export default async function Page(props: Props) {
   );
 
   return (
-    <main>
-      <Container sx={{ marginY: 4 }}>
-        <Grid container spacing={{ xs: 6, md: 8 }}>
-          {character && (
-            <Grid size={{ xs: 12, md: 6 }}>
-              <CharacterItem character={character} isDetail />
-            </Grid>
-          )}
-          {otherCharacters.length > 0 && (
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box>
-                <Typography sx={{ fontWeight: "bold", fontSize: 24, mb: 4 }}>
-                  Other Characters
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  {otherCharacters.map((character) => (
-                    <Box
-                      component={Link}
-                      href={`/characters/${character.id}`}
-                      key={character.id}
-                      sx={{ display: "flex", gap: 2 }}
-                    >
-                      <Box sx={{ width: "20%" }}>
-                        <CharacterImageWrapper
-                          src={character.image}
-                          alt={character.name}
-                          priority
-                        />
-                      </Box>
-                      <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography
-                          sx={{
-                            fontWeight: "bold",
-                            color: "gray",
-                            fontSize: 24,
-                          }}
-                        >
-                          {character.name}
-                        </Typography>
-                        <Typography sx={{ fontStyle: "italic", fontSize: 18 }}>
-                          {character.location.name}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontStyle: "italic",
-                            marginTop: "auto",
-                            marginBottom: 0,
-                          }}
-                        >
-                          {character.type || "-"} / {character.gender}
-                        </Typography>
-                      </Box>
+    <Container component="main" sx={{ marginY: 4 }}>
+      <Grid container spacing={{ xs: 6, md: 8 }}>
+        {character && (
+          <Grid size={{ xs: 12, md: 6 }}>
+            <CharacterItem character={character} isDetail />
+          </Grid>
+        )}
+        {otherCharacters.length > 0 && (
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box>
+              <Typography sx={{ fontWeight: "bold", fontSize: 24, mb: 4 }}>
+                Other Characters
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                {otherCharacters.map((character) => (
+                  <Box
+                    component={Link}
+                    href={`/characters/${character.id}`}
+                    key={character.id}
+                    sx={{ display: "flex", gap: 2 }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <CharacterImageWrapper
+                        src={character.image}
+                        alt={character.name}
+                        priority
+                      />
                     </Box>
-                  ))}
-                </Box>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          color: "gray",
+                          fontSize: 24,
+                        }}
+                      >
+                        {character.name}
+                      </Typography>
+                      <Typography sx={{ fontStyle: "italic", fontSize: 18 }}>
+                        {character.location.name}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontStyle: "italic",
+                          marginTop: "auto",
+                          marginBottom: 0,
+                        }}
+                      >
+                        {character.type || "-"} / {character.gender}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
               </Box>
-            </Grid>
-          )}
-        </Grid>
-      </Container>
-    </main>
+            </Box>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
   );
 }

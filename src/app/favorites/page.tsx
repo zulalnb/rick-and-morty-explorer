@@ -22,13 +22,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <main>
-      <Container sx={{ marginY: 4 }}>
-        <Typography variant="h1" sx={visuallyHidden}>
-          Favorites
-        </Typography>
-        <FavoriteCharacterList />
-      </Container>
-    </main>
+    <Container component="main" sx={{ marginY: 4 }}>
+      <Typography variant="h1" sx={visuallyHidden}>
+        Favorites
+      </Typography>
+      <FavoriteCharacterList />
+    </Container>
   );
 }

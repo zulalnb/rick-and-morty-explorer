@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { FilterButton } from "./FilterButton";
@@ -11,9 +11,10 @@ const STATUS_FILTERS = [
   { key: "unknown", color: "disabled", label: "Unknown" },
 ] as const;
 
-export const FilterButtons = ({ locationId }: { locationId: number }) => {
+export const FilterButtons = () => {
   const searchParams = useSearchParams();
   const activeStatus = searchParams.get("status");
+  const { id } = useParams();
 
   return (
     <Container
@@ -41,8 +42,8 @@ export const FilterButtons = ({ locationId }: { locationId: number }) => {
             key={status.key}
             href={
               activeStatus === status.key
-                ? `/locations/${locationId}/characters`
-                : `/locations/${locationId}/characters/?status=${status.key}`
+                ? `/locations/${id}/characters`
+                : `/locations/${id}/characters/?status=${status.key}`
             }
             title={status.label}
             iconColor={status.color}
