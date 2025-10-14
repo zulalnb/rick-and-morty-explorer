@@ -69,6 +69,19 @@ export async function generateMetadata(
       ...previousOpenGraph,
       title: `${character.name} | Rick and Morty Explorer`,
       description,
+      images: [
+        {
+          url: character.image,
+          width: 300,
+          height: 300,
+          alt: `${character.name} character portrait`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${character.name} | Rick and Morty Explorer`,
+      description,
       images: [character.image],
     },
   };
