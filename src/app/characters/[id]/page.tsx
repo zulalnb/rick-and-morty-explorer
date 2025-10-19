@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { Character } from "@/types/character";
 import { Location } from "@/types/location";
 import { getRandomItems } from "@/lib/utils";
+import { BASE_API_URL } from "@/lib/constants";
 import { CharacterItem } from "@/components/CharacterItem";
 import { CharacterImageWrapper } from "@/components/CharacterImageWrapper";
 
@@ -22,9 +23,7 @@ const getLocation = async (url: string): Promise<Location> => {
 };
 
 const getCharacterDetail = async (id: number): Promise<Character> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${id}`
-  );
+  const res = await fetch(`${BASE_API_URL}/character/${id}`);
   if (!res.ok) {
     notFound();
   }
@@ -36,9 +35,7 @@ const getOtherCharacters = async (
   characterIds: number[],
   status: string
 ): Promise<Character[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${characterIds}`
-  );
+  const res = await fetch(`${BASE_API_URL}/character/${characterIds}`);
   const data: Character[] = await res.json();
   const characters: Character[] = Array.isArray(data) ? data : [data];
   const filteredCharacters = characters.filter(

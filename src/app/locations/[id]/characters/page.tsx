@@ -13,6 +13,7 @@ import { Pagination } from "@/components/Pagination";
 import { LocationDetail } from "@/types/locationDetail";
 import { Character } from "@/types/character";
 import { paginateItems } from "@/lib/utils";
+import { BASE_API_URL } from "@/lib/constants";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -20,9 +21,7 @@ type Props = {
 };
 
 const getLocationInfo = async (id: number): Promise<LocationDetail> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/location/${id}`
-  );
+  const res = await fetch(`${BASE_API_URL}/location/${id}`);
   if (!res.ok) {
     notFound();
   }
@@ -33,9 +32,7 @@ const getLocationInfo = async (id: number): Promise<LocationDetail> => {
 const getCharacterDetailsByLocation = async (
   ids: number[]
 ): Promise<Character[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/character/${ids}`
-  );
+  const res = await fetch(`${BASE_API_URL}/character/${ids}`);
   const data: Character[] = await res.json();
   const verifyData: Character[] = Array.isArray(data) ? data : [data];
   return verifyData;

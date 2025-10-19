@@ -5,6 +5,7 @@ import { visuallyHidden } from "@mui/utils";
 import { LocationList } from "@/components/LocationList";
 import { Pagination } from "@/components/Pagination";
 import { LocationAPIResponse } from "@/types/location";
+import { BASE_API_URL } from "@/lib/constants";
 
 type Params = Promise<{ page: string }>;
 
@@ -14,9 +15,7 @@ type Props = {
 };
 
 const getLocations = async (page: number = 1): Promise<LocationAPIResponse> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/location?page=${page}`
-  );
+  const res = await fetch(`${BASE_API_URL}/location?page=${page}`);
   const data: LocationAPIResponse = await res.json();
   return data;
 };
