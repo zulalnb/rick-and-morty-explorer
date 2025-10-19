@@ -8,8 +8,8 @@ import GlobalStyles from "@mui/material/GlobalStyles";
 import StoreProvider from "./StoreProvider";
 import theme from "@/theme";
 import { Header } from "@/components/Header";
+import { BASE_URL } from "@/lib/constants";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const NEXT_VERSION = process.env.NEXT_PUBLIC_NEXT_VERSION
   ? `Next.js ${process.env.NEXT_PUBLIC_NEXT_VERSION}`
   : "Next.js";
@@ -24,7 +24,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(BASE_URL),
   title: {
     template: `%s | ${SITE_NAME}`,
     default: `${SITE_NAME} | Discover Locations and Characters`,

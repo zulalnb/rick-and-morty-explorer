@@ -88,10 +88,9 @@ export default async function Page(props: {
   const params = await props.params;
   const locationInfo = await getLocationInfo(params.id);
 
-  const characterIds = locationInfo.residents.map((residentUrl) => {
-    const parts = residentUrl.split("/");
-    return parseInt(parts[parts.length - 1], 10);
-  });
+  const characterIds = locationInfo.residents
+    .map((url) => parseInt(url.split("/").pop() || "", 10))
+    .filter((id) => !isNaN(id));
 
   const allCharacters =
     characterIds.length > 0

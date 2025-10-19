@@ -2,12 +2,14 @@ export const paginateItems = <T>(
   array: T[],
   itemsPerPage: number = 3
 ): { paginatedArray: T[][]; totalPages: number } => {
-  const totalPages = Math.ceil(array.length / itemsPerPage);
-  const paginatedArray: T[][] = [];
+  const paginatedArray = array.reduce<T[][]>((acc, _, index) => {
+    if (index % itemsPerPage === 0) {
+      acc.push(array.slice(index, index + itemsPerPage));
+    }
+    return acc;
+  }, []);
 
-  for (let i = 0; i < array.length; i += itemsPerPage) {
-    paginatedArray.push(array.slice(i, i + itemsPerPage));
-  }
+  const totalPages = paginatedArray.length;
 
   return { paginatedArray, totalPages };
 };
