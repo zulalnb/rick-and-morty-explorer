@@ -27,9 +27,7 @@ async function fetchAll<T>(apiUrl: string): Promise<T[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes = [
-    { url: `${BASE_URL}/`, lastModified: new Date() },
-  ];
+  const staticRoutes = [{ url: `${BASE_URL}/`, lastModified: new Date() }];
 
   const firstLocationPage = await fetch(`${BASE_API_URL}/location`).then(
     (res) => res.json() as Promise<LocationAPIResponse>
