@@ -59,9 +59,14 @@ export async function generateMetadata(
 
   const description = `Uncover the full story of ${character.name}, a ${character.species} from the Rick and Morty universe. Explore their origin, current status, and last known location.`;
 
+  const canonicalPath = `/characters/${params.id}`;
+
   return {
     title: character.name,
     description,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
       ...previousOpenGraph,
       title: `${character.name} | Rick and Morty Explorer`,
@@ -74,6 +79,7 @@ export async function generateMetadata(
           alt: `${character.name} character portrait`,
         },
       ],
+      url: canonicalPath,
     },
     twitter: {
       card: "summary_large_image",

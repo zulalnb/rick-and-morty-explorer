@@ -50,6 +50,9 @@ export async function generateMetadata(
     ? query.status[0]
     : query.status || "";
 
+  const statusQuery = status ? `/?status=${status}` : "";
+  const canonicalPath = `/locations/${id}/characters/page/${page}${statusQuery}`;
+
   const title = `${capitalize(status)} Characters in ${
     location.name
   } - Page ${page}`;
@@ -59,8 +62,6 @@ export async function generateMetadata(
   }, a planet in the ${
     location.dimension
   } dimension (Page ${page}). Explore the residents from the Rick and Morty universe.`;
-
-  const canonicalPath = `/locations/${id}/characters/page/${page}`;
 
   return {
     title,
