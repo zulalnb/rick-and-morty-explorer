@@ -4,7 +4,10 @@ import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import PublicOff from "@mui/icons-material/PublicOff";
+import SearchOff from "@mui/icons-material/SearchOff";
 import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 
 import { CharacterList } from "@/components/CharacterList";
@@ -112,7 +115,7 @@ export default async function Page(props: {
           Characters
         </Typography>
       </Container>
-      {allCharacters && (
+      {allCharacters.length > 0 && (
         <>
           <Container>
             <Box
@@ -138,6 +141,44 @@ export default async function Page(props: {
           </Container>
           <FilterButtons />
         </>
+      )}
+      {allCharacters.length < 1 && (
+        <Box textAlign="center" py={8}>
+          <PublicOff sx={{ fontSize: 72, color: "text.secondary" }} />
+          <Typography variant="h3" fontWeight="bold" gutterBottom>
+            No Residents Found
+          </Typography>
+          <Typography color="text.secondary">
+            This location seems uninhabited, no characters live here.
+          </Typography>
+          <Link
+            component={NextLink}
+            href="/locations"
+            sx={{ mt: 2, display: "inline-block" }}
+          >
+            Explore Other Locations
+          </Link>
+        </Box>
+      )}
+      {allCharacters.length > 0 && filteredCharacters.length < 1 && (
+        <Box textAlign="center" py={8}>
+          <SearchOff sx={{ fontSize: 72, color: "action.active" }} />
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+            No Matching Characters
+          </Typography>
+          <Typography color="text.secondary">
+            No characters with the selected status in this location.
+          </Typography>
+          <Button
+            variant="outlined"
+            component={NextLink}
+            href={`/locations/${params.id}/characters`}
+            sx={{ mt: 2 }}
+            size="large"
+          >
+            Clear Filter
+          </Button>
+        </Box>
       )}
       {characters && (
         <>
