@@ -58,6 +58,8 @@ export const CharacterItem = ({
         </IconButton>
       </Box>
       <Box
+        component={isDetail ? "div" : Link}
+        href={href}
         sx={{
           ...(!isDetail && {
             display: "flex",
@@ -79,8 +81,7 @@ export const CharacterItem = ({
         >
           <Box>
             <Typography
-              component={isDetail ? "h1" : Link}
-              href={href}
+              component="h1"
               sx={{
                 display: "block",
                 fontWeight: "bold",
