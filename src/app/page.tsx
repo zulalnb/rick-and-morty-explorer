@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
 import { LocationList } from "@/components/LocationList";
 import { Pagination } from "@/components/Pagination";
-import { LocationAPIResponse } from "@/types/location";
+import { LocationAPIResponse } from "@/types/api/location";
 import { BASE_API_URL } from "@/lib/constants";
 
 type Props = {

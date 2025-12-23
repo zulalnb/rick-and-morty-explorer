@@ -12,7 +12,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
-import { Character } from "@/types/character";
+import { Character } from "@/types/api/character";
 
 export const CharacterItem = ({
   character,
@@ -34,6 +34,7 @@ export const CharacterItem = ({
           alt={character.name}
           fill
           priority
+          fetchPriority="high"
           style={{
             position: "absolute",
             top: 0,

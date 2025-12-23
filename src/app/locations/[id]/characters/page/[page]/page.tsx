@@ -9,10 +9,11 @@ import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
-import { Character } from "@/types/character";
-import { Location } from "@/types/location";
-import { paginateItems } from "@/lib/utils";
+import { Character } from "@/types/api/character";
+import { Location } from "@/types/api/location";
+import { normalizeStatusParam, paginateItems } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
+import { getLocationCharacters } from "@/lib/server/locationCharacters";
 
 type Props = {
   params: Promise<{ id: string; page: string }>;
@@ -21,20 +22,8 @@ type Props = {
 
 const getLocationInfo = async (id: number): Promise<Location> => {
   const res = await fetch(`${BASE_API_URL}/location/${id}`);
-  if (!res.ok) {
-    notFound();
-  }
   const data: Location = await res.json();
   return data;
-};
-
-const getCharacterDetailsByLocation = async (
-  ids: number[]
-): Promise<Character[]> => {
-  const res = await fetch(`${BASE_API_URL}/character/${ids}`);
-  const data: Character[] = await res.json();
-  const verifyData: Character[] = Array.isArray(data) ? data : [data];
-  return verifyData;
 };
 
 export async function generateMetadata(
@@ -44,6 +33,14 @@ export async function generateMetadata(
   const query = await searchParams;
   const { id, page } = await params;
   const location = await getLocationInfo(Number(id));
+
+  if (!location) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
+
   const previousOpenGraph = (await parent).openGraph || {};
 
   const status = Array.isArray(query.status)
@@ -81,26 +78,32 @@ export async function generateMetadata(
 export default async function Page(props: Props) {
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const page = Number(params.page) || 1;
+  const status = Array.isArray(searchParams.status)
+    ? searchParams.status[0]
+    : searchParams.status;
+
+  const isPageInvalid = !Number.isInteger(page) || page < 0;
+
+  if (isPageInvalid) {
+    return notFound();
+  }
+
   const locationInfo = await getLocationInfo(Number(params.id));
 
-  const characterIds = locationInfo.residents
-    .map((url) => parseInt(url.split("/").pop() || "", 10))
-    .filter((id) => !isNaN(id));
+  if (!locationInfo) {
+    return notFound();
+  }
 
-  const allCharacters =
-    characterIds.length > 0
-      ? await getCharacterDetailsByLocation(characterIds)
-      : [];
+  const { characters, totalPages } = await getLocationCharacters({
+    residents: locationInfo.residents,
+    page: Number(params.page),
+    status: normalizeStatusParam(status),
+  });
 
-  const filteredCharacters = searchParams.status
-    ? allCharacters.filter(
-        (character) => character.status.toLowerCase() === searchParams.status
-      )
-    : allCharacters;
-
-  const { paginatedArray, totalPages } = paginateItems(filteredCharacters);
-
-  const characters = paginatedArray[params.page ? Number(params.page) - 1 : 0];
+  if (characters.length < 1) {
+    return notFound();
+  }
 
   return (
     <main>
@@ -108,40 +111,30 @@ export default async function Page(props: Props) {
         <Typography variant="h1" sx={visuallyHidden}>
           Characters
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mb: 1,
+          }}
+        >
+          <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+            Filter by status
+          </Typography>
+          <Link
+            component={NextLink}
+            href="/favorites"
+            color="inherit"
+            sx={{ fontWeight: "bold", fontSize: 18 }}
+          >
+            My Favorites
+          </Link>
+        </Box>
       </Container>
-      {allCharacters && (
-        <>
-          <Container>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mb: 1,
-              }}
-            >
-              <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
-                Filter by status
-              </Typography>
-              <Link
-                component={NextLink}
-                href="/favorites"
-                color="inherit"
-                sx={{ fontWeight: "bold", fontSize: 18 }}
-              >
-                My Favorites
-              </Link>
-            </Box>
-          </Container>
-          <FilterButtons />
-        </>
-      )}
-      {characters && (
-        <>
-          <CharacterList characters={characters} />
-          <Pagination count={totalPages} currentPage={Number(params.page)} />
-        </>
-      )}
+      <FilterButtons />
+      <CharacterList characters={characters} />
+      <Pagination count={totalPages} currentPage={Number(params.page)} />
     </main>
   );
 }

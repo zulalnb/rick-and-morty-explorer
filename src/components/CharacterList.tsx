@@ -6,7 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { CharacterItem } from "./CharacterItem";
-import { Character } from "@/types/character";
+import { Character } from "@/types/api/character";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Pagination } from "swiper/modules";

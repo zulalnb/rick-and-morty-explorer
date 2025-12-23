@@ -1,3 +1,7 @@
+import { CharacterStatus } from "@/types/domain/location";
+
+const VALID_STATUSES = ["alive", "dead", "unknown"] as const;
+
 export const paginateItems = <T>(
   array: T[],
   itemsPerPage: number = 3
@@ -34,3 +38,15 @@ export const normalizePath = (path: string) => {
   }
   return "/" + segments.join("/");
 };
+
+export function normalizeStatusParam(
+  value: string | string[] | undefined
+): CharacterStatus | undefined {
+  if (typeof value !== "string") return undefined;
+
+  const normalized = value.toLowerCase();
+
+  return (VALID_STATUSES as readonly string[]).includes(normalized)
+    ? (normalized as CharacterStatus)
+    : undefined;
+}

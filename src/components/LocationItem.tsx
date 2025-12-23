@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Location } from "@/types/location";
+import { Location } from "@/types/api/location";
 
 interface LocationItemProps extends GridProps {
   location: Location;

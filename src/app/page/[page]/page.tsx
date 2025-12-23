@@ -1,10 +1,11 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
 import { LocationList } from "@/components/LocationList";
 import { Pagination } from "@/components/Pagination";
-import { LocationAPIResponse } from "@/types/location";
+import { LocationAPIResponse } from "@/types/api/location";
 import { BASE_API_URL } from "@/lib/constants";
 
 type Params = Promise<{ page: string }>;
@@ -26,12 +27,19 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const page = (await params).page;
   const currentPage = Number(page);
+  const locations = await getLocations(currentPage);
+
+  if (!locations.results) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
 
   const canonicalPath = `/page/${currentPage}`;
-
   const previousOpenGraph = (await parent).openGraph || {};
 
-  const title = `Rick and Morty Locations - Page ${currentPage}`;
+  const title = `Rick and Morty Locations - Page ${currentPage} of ${locations.info.count}`;
   const description = `Continue exploring iconic locations from the Rick and Morty universe on page ${currentPage}. Discover unique planets, dimensions, and the characters who inhabit them..`;
 
   return {
@@ -54,6 +62,10 @@ export default async function Page(props: { params: Params }) {
   const currentPage = Number(params.page);
 
   const locations = await getLocations(currentPage);
+
+  if (!locations.results) {
+    return notFound();
+  }
 
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>

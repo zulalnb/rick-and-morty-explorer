@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { BASE_API_URL, BASE_URL } from "@/lib/constants";
-import { Location } from "@/types/location";
-import { Character } from "@/types/character";
+import { Location } from "@/types/api/location";
+import { Character } from "@/types/api/character";
 
 async function fetchAll<T>(apiUrl: string): Promise<T[]> {
   let allResults: T[] = [];

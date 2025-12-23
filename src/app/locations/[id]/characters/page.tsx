@@ -13,10 +13,10 @@ import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
-import { Character } from "@/types/character";
+import { Character } from "@/types/api/character";
 import { paginateItems } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
-import { Location } from "@/types/location";
+import { Location } from "@/types/api/location";
 
 type Props = {
   params: Promise<{ id: string }>;

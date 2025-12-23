@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Character } from "@/types/character";
+import { Character } from "@/types/api/character";
 
 const initialState: Character[] = [];
 

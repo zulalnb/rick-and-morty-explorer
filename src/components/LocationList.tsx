@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Grid from "@mui/material/Grid";
-import { Location } from "@/types/location";
+import { Location } from "@/types/api/location";
 import { LocationSkeleton } from "./LocationSkeleton";
 
 const LocationItem = dynamic(
