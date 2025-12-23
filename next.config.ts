@@ -23,22 +23,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      { source: "/page/1", destination: "/", permanent: true },
-      {
-        source: "/locations/:id/characters/page/1",
-        has: [{ type: "query", key: "status" }],
-        destination: "/locations/:id/characters?status=:status",
-        permanent: true,
-      },
-      {
-        source: "/locations/:id/characters/page/1",
-        destination: "/locations/:id/characters",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

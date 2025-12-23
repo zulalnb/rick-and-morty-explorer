@@ -45,18 +45,21 @@ export async function generateMetadata(
       : 1
   );
 
-  const isPageInvalid = !Number.isInteger(page) || Number(page) < 1;
+  const status = Array.isArray(query.status)
+    ? query.status[0]
+    : query.status || "";
 
-  if (isPageInvalid) {
+  const normalizedStatus = normalizeStatusParam(status);
+
+  const isPageInvalid =
+    isNaN(page) || !Number.isInteger(page) || Number(page) < 1;
+
+  if (isPageInvalid || (status && !normalizedStatus)) {
     return {
       title: "Page Not Found (404)",
       robots: { index: false, follow: false },
     };
   }
-
-  const status = Array.isArray(query.status)
-    ? query.status[0]
-    : query.status || "";
 
   const previousOpenGraph = (await parent).openGraph || {};
   const location = await getLocationInfo(Number(id));
@@ -71,7 +74,7 @@ export async function generateMetadata(
   const { characters, totalPages } = await getLocationCharacters({
     residents: location.residents,
     page,
-    status: normalizeStatusParam(status),
+    status: normalizedStatus,
   });
 
   if (characters.length < 1 && page > totalPages) {
@@ -133,9 +136,10 @@ export default async function Page(props: Props) {
     ? searchParams.status[0]
     : searchParams.status;
 
+  const normalizedStatus = normalizeStatusParam(status);
   const isPageInvalid = !Number.isInteger(page) || page < 1;
 
-  if (isPageInvalid) {
+  if (isPageInvalid || (status && !normalizedStatus)) {
     return notFound();
   }
 
@@ -150,7 +154,7 @@ export default async function Page(props: Props) {
   const { characters, totalPages } = await getLocationCharacters({
     residents,
     page,
-    status: normalizeStatusParam(status),
+    status: normalizedStatus,
   });
 
   if (characters.length < 1 && page > totalPages) {
