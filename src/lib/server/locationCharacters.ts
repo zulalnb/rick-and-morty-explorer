@@ -14,7 +14,9 @@ type GetLocationCharactersParams = {
 const getCharacterDetailsByLocation = async (
   ids: number[]
 ): Promise<Character[]> => {
-  const res = await fetch(`${BASE_API_URL}/character/${ids}`);
+  const res = await fetch(`${BASE_API_URL}/character/${ids}`, {
+    next: { revalidate: 3600 },
+  });
   const data: Character[] = await res.json();
   const verifyData: Character[] = Array.isArray(data) ? data : [data];
   return verifyData;

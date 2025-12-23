@@ -20,7 +20,9 @@ type Props = {
 };
 
 const getLocationInfo = async (id: number): Promise<Location> => {
-  const res = await fetch(`${BASE_API_URL}/location/${id}`);
+  const res = await fetch(`${BASE_API_URL}/location/${id}`, {
+    next: { revalidate: 3600 },
+  });
   const data: Location = await res.json();
   return data;
 };
