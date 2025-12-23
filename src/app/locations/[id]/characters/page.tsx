@@ -13,22 +13,22 @@ import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
-import { LocationDetail } from "@/types/locationDetail";
 import { Character } from "@/types/character";
 import { paginateItems } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
+import { Location } from "@/types/location";
 
 type Props = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-const getLocationInfo = async (id: number): Promise<LocationDetail> => {
+const getLocationInfo = async (id: number): Promise<Location> => {
   const res = await fetch(`${BASE_API_URL}/location/${id}`);
   if (!res.ok) {
     notFound();
   }
-  const data: LocationDetail = await res.json();
+  const data: Location = await res.json();
   return data;
 };
 
