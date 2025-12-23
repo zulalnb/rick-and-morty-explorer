@@ -27,6 +27,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const page = (await params).page;
   const currentPage = Number(page);
+
+  if (isNaN(currentPage)) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
+
   const locations = await getLocations(currentPage);
 
   if (!locations.results) {
@@ -60,6 +68,10 @@ export async function generateMetadata(
 export default async function Page(props: { params: Params }) {
   const params = await props.params;
   const currentPage = Number(params.page);
+
+  if (isNaN(currentPage)) {
+    return notFound();
+  }
 
   const locations = await getLocations(currentPage);
 

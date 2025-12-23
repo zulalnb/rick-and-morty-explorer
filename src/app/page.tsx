@@ -13,7 +13,9 @@ type Props = {
 };
 
 const getLocations = async (page = 1): Promise<LocationAPIResponse> => {
-  const res = await fetch(`${BASE_API_URL}/location?page=${page}`);
+  const res = await fetch(`${BASE_API_URL}/location?page=${page}`, {
+    next: { revalidate: 3600 },
+  });
   const data: LocationAPIResponse = await res.json();
   return data;
 };

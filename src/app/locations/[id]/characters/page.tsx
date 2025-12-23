@@ -24,7 +24,9 @@ type Props = {
 };
 
 const getLocationInfo = async (id: number): Promise<Location> => {
-  const res = await fetch(`${BASE_API_URL}/location/${id}`);
+  const res = await fetch(`${BASE_API_URL}/location/${id}`, {
+    next: { revalidate: 3600 },
+  });
   const data: Location = await res.json();
   return data;
 };
@@ -43,18 +45,6 @@ export async function generateMetadata(
   const location = await getLocationInfo(Number(id));
 
   if (!location) {
-    return {
-      title: "Page Not Found (404)",
-      robots: { index: false, follow: false },
-    };
-  }
-
-  const { characters } = await getLocationCharacters({
-    residents: location.residents,
-    status: normalizeStatusParam(status),
-  });
-
-  if (characters.length < 1) {
     return {
       title: "Page Not Found (404)",
       robots: { index: false, follow: false },
