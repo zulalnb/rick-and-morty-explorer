@@ -22,13 +22,12 @@ const getLocation = async (url: string): Promise<Location> => {
   return data;
 };
 
-const getCharacterDetail = async (id: number): Promise<Character> => {
+const getCharacterDetail = async (id: number): Promise<Character | null> => {
   const res = await fetch(`${BASE_API_URL}/character/${id}`);
-  if (!res.ok) {
-    notFound();
-  }
-  const data: Character = await res.json();
-  return data;
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Failed to fetch");
+
+  return res.json();
 };
 
 const getOtherCharacters = async (
@@ -56,6 +55,13 @@ export async function generateMetadata(
   const params = await props.params;
   const character = await getCharacterDetail(Number(params.id));
   const previousOpenGraph = (await parent).openGraph || {};
+
+  if (!character) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
 
   const description = `Uncover the full story of ${character.name}, a ${character.species} from the Rick and Morty universe. Explore their origin, current status, and last known location.`;
 
@@ -94,9 +100,12 @@ export default async function Page(props: Props) {
   const params = await props.params;
   const id = Number(params.id);
   const character = await getCharacterDetail(id);
-  const location = character
-    ? await getLocation(character.location.url)
-    : { residents: [], dimension: "" };
+
+  if (!character) {
+    return notFound();
+  }
+
+  const location = await getLocation(character.location.url);
 
   const characterIds = character
     ? location.residents

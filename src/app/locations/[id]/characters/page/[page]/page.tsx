@@ -9,9 +9,8 @@ import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
-import { Character } from "@/types/api/character";
 import { Location } from "@/types/api/location";
-import { normalizeStatusParam, paginateItems } from "@/lib/utils";
+import { normalizeStatusParam } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
 import { getLocationCharacters } from "@/lib/server/locationCharacters";
 
@@ -32,6 +31,11 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const query = await searchParams;
   const { id, page } = await params;
+  const status = Array.isArray(query.status)
+    ? query.status[0]
+    : query.status || "";
+
+  const previousOpenGraph = (await parent).openGraph || {};
   const location = await getLocationInfo(Number(id));
 
   if (!location) {
@@ -41,24 +45,31 @@ export async function generateMetadata(
     };
   }
 
-  const previousOpenGraph = (await parent).openGraph || {};
+  const { characters, totalPages } = await getLocationCharacters({
+    residents: location.residents,
+    page: Number(page),
+    status: normalizeStatusParam(status),
+  });
 
-  const status = Array.isArray(query.status)
-    ? query.status[0]
-    : query.status || "";
+  if (characters.length < 1) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
 
-  const statusQuery = status ? `/?status=${status}` : "";
+  const statusQuery = status ? `/?status=${capitalize(status)}` : "";
   const canonicalPath = `/locations/${id}/characters/page/${page}${statusQuery}`;
 
   const title = `${capitalize(status)} Characters in ${
     location.name
-  } - Page ${page}`;
+  } - Page ${page} of ${totalPages}`;
 
   const description = `List of ${status || "all"} characters from ${
     location.name
   }, a planet in the ${
     location.dimension
-  } dimension (Page ${page}). Explore the residents from the Rick and Morty universe.`;
+  } dimension (Page ${page} of ${totalPages}). See the full list of residents from the Rick and Morty universe and learn about their status.`;
 
   return {
     title,

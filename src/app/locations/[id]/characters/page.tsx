@@ -13,10 +13,10 @@ import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import { CharacterList } from "@/components/CharacterList";
 import { FilterButtons } from "@/components/FilterButtons";
 import { Pagination } from "@/components/Pagination";
-import { Character } from "@/types/api/character";
-import { paginateItems } from "@/lib/utils";
+import { normalizeStatusParam } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
 import { Location } from "@/types/api/location";
+import { getLocationCharacters } from "@/lib/server/locationCharacters";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -25,20 +25,8 @@ type Props = {
 
 const getLocationInfo = async (id: number): Promise<Location> => {
   const res = await fetch(`${BASE_API_URL}/location/${id}`);
-  if (!res.ok) {
-    notFound();
-  }
   const data: Location = await res.json();
   return data;
-};
-
-const getCharacterDetailsByLocation = async (
-  ids: number[]
-): Promise<Character[]> => {
-  const res = await fetch(`${BASE_API_URL}/character/${ids}`);
-  const data: Character[] = await res.json();
-  const verifyData: Character[] = Array.isArray(data) ? data : [data];
-  return verifyData;
 };
 
 export async function generateMetadata(
@@ -47,12 +35,31 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const query = await searchParams;
   const { id } = await params;
-  const location = await getLocationInfo(Number(id));
-  const previousOpenGraph = (await parent).openGraph || {};
-
   const status = Array.isArray(query.status)
     ? query.status[0]
     : query.status || "";
+
+  const previousOpenGraph = (await parent).openGraph || {};
+  const location = await getLocationInfo(Number(id));
+
+  if (!location) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const { characters } = await getLocationCharacters({
+    residents: location.residents,
+    status: normalizeStatusParam(status),
+  });
+
+  if (characters.length < 1) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
 
   const statusQuery = status ? `/?status=${status}` : "";
   const canonicalPath = `/locations/${id}/characters${statusQuery}`;
@@ -87,26 +94,22 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const status = Array.isArray(searchParams.status)
+    ? searchParams.status[0]
+    : searchParams.status;
+
   const locationInfo = await getLocationInfo(params.id);
 
-  const characterIds = locationInfo.residents
-    .map((url) => parseInt(url.split("/").pop() || "", 10))
-    .filter((id) => !isNaN(id));
+  if (!locationInfo) {
+    return notFound();
+  }
 
-  const allCharacters =
-    characterIds.length > 0
-      ? await getCharacterDetailsByLocation(characterIds)
-      : [];
+  const residents = locationInfo.residents;
 
-  const filteredCharacters = searchParams.status
-    ? allCharacters.filter(
-        (character) => character.status.toLowerCase() === searchParams.status
-      )
-    : allCharacters;
-
-  const { paginatedArray, totalPages } = paginateItems(filteredCharacters);
-
-  const characters = paginatedArray[params.page ? params.page - 1 : 0];
+  const { characters, totalPages } = await getLocationCharacters({
+    residents,
+    status: normalizeStatusParam(status),
+  });
 
   return (
     <main>
@@ -115,7 +118,7 @@ export default async function Page(props: {
           Characters
         </Typography>
       </Container>
-      {allCharacters.length > 0 && (
+      {residents.length > 0 && (
         <>
           <Container>
             <Box
@@ -142,7 +145,8 @@ export default async function Page(props: {
           <FilterButtons />
         </>
       )}
-      {allCharacters.length < 1 && (
+
+      {residents.length < 1 && (
         <Box textAlign="center" py={8}>
           <PublicOff sx={{ fontSize: 72, color: "text.secondary" }} />
           <Typography variant="h3" fontWeight="bold" gutterBottom>
@@ -153,14 +157,15 @@ export default async function Page(props: {
           </Typography>
           <Link
             component={NextLink}
-            href="/locations"
+            href="/"
             sx={{ mt: 2, display: "inline-block" }}
           >
             Explore Other Locations
           </Link>
         </Box>
       )}
-      {allCharacters.length > 0 && filteredCharacters.length < 1 && (
+
+      {residents.length > 0 && characters.length < 1 && (
         <Box textAlign="center" py={8}>
           <SearchOff sx={{ fontSize: 72, color: "action.active" }} />
           <Typography variant="h4" fontWeight="bold" gutterBottom>
