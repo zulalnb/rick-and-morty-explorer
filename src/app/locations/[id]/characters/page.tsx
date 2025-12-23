@@ -37,6 +37,23 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const query = await searchParams;
   const { id } = await params;
+  const page = Number(
+    typeof query.page === "string"
+      ? query.page
+      : Array.isArray(query.page)
+      ? query.page[0]
+      : 1
+  );
+
+  const isPageInvalid = !Number.isInteger(page) || Number(page) < 1;
+
+  if (isPageInvalid) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
+
   const status = Array.isArray(query.status)
     ? query.status[0]
     : query.status || "";
@@ -51,8 +68,30 @@ export async function generateMetadata(
     };
   }
 
-  const statusQuery = status ? `/?status=${status}` : "";
-  const canonicalPath = `/locations/${id}/characters${statusQuery}`;
+  const { characters, totalPages } = await getLocationCharacters({
+    residents: location.residents,
+    page,
+    status: normalizeStatusParam(status),
+  });
+
+  if (characters.length < 1 && page > totalPages) {
+    return {
+      title: "Page Not Found (404)",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const searchQuery = new URLSearchParams();
+  if (status) {
+    searchQuery.set("status", status);
+  }
+  if (page > 1) {
+    searchQuery.set("page", String(page));
+  }
+
+  const canonicalPath = searchQuery.toString()
+    ? `/locations/${id}/characters?${searchQuery.toString()}`
+    : `/locations/${id}/characters`;
 
   const title = `All ${status ? capitalize(status) + " " : ""}Characters in ${
     location.name
@@ -78,17 +117,29 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page(props: {
-  params: Promise<{ id: number; page?: number }>;
-  searchParams: Promise<{ status?: string }>;
-}) {
+export default async function Page(props: Props) {
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const id = Number(params.id);
+  const page = Number(
+    typeof searchParams.page === "string"
+      ? searchParams.page
+      : Array.isArray(searchParams.page)
+      ? searchParams.page[0]
+      : 1
+  );
+
   const status = Array.isArray(searchParams.status)
     ? searchParams.status[0]
     : searchParams.status;
 
-  const locationInfo = await getLocationInfo(params.id);
+  const isPageInvalid = !Number.isInteger(page) || page < 1;
+
+  if (isPageInvalid) {
+    return notFound();
+  }
+
+  const locationInfo = await getLocationInfo(id);
 
   if (!locationInfo) {
     return notFound();
@@ -98,8 +149,13 @@ export default async function Page(props: {
 
   const { characters, totalPages } = await getLocationCharacters({
     residents,
+    page,
     status: normalizeStatusParam(status),
   });
+
+  if (characters.length < 1 && page > totalPages) {
+    return notFound();
+  }
 
   return (
     <main>
@@ -175,10 +231,10 @@ export default async function Page(props: {
           </Button>
         </Box>
       )}
-      {characters && (
+      {characters.length > 0 && (
         <>
           <CharacterList characters={characters} />
-          <Pagination count={totalPages} currentPage={1} />
+          <Pagination count={totalPages} currentPage={page} />
         </>
       )}
     </main>
