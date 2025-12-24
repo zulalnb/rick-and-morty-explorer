@@ -157,6 +157,10 @@ export default async function Page(props: Props) {
     status: normalizedStatus,
   });
 
+  if (totalPages > 0 && page > totalPages) {
+    return notFound();
+  }
+
   return (
     <main>
       <Container>
