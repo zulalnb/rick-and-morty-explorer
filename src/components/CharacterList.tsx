@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -21,15 +20,33 @@ export const CharacterList = ({
 }) => {
   const searchParams = useSearchParams();
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
-
-  const swiperPadding = isSmUp ? "0px" : "16px";
 
   return (
     <Container
       sx={(theme) => ({
         [theme.breakpoints.down("sm")]: {
           paddingX: 0,
+        },
+        "& .swiper": {
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          [theme.breakpoints.up("sm")]: {
+            paddingLeft: "0px",
+            paddingRight: "0px",
+          },
+        },
+        "& .swiper-wrapper": {
+          display: "flex",
+        },
+        "& .swiper-slide": {
+          [theme.breakpoints.up("sm")]: {
+            width: "calc(33.33% - 22px) !important",
+            marginRight: "32px",
+          },
+          [theme.breakpoints.up("md")]: {
+            width: "calc(33.33% - 43px) !important",
+            marginRight: "64px",
+          },
         },
       })}
     >
@@ -40,7 +57,8 @@ export const CharacterList = ({
           el: ".custom-pagination",
           clickable: true,
         }}
-        style={{ paddingLeft: swiperPadding, paddingRight: swiperPadding }}
+        slidesPerView={1}
+        spaceBetween={32}
         breakpoints={{
           [theme.breakpoints.values.xs]: {
             slidesPerView: 1,
