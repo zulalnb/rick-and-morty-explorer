@@ -23,7 +23,9 @@ const getLocation = async (url: string): Promise<Location> => {
 };
 
 const getCharacterDetail = async (id: number): Promise<Character | null> => {
-  const res = await fetch(`${BASE_API_URL}/character/${id}`);
+  const res = await fetch(`${BASE_API_URL}/character/${id}`, {
+    next: { revalidate: 3600 },
+  });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error("Failed to fetch");
 
@@ -127,11 +129,9 @@ export default async function Page(props: Props) {
   return (
     <Container component="main" sx={{ marginY: 4 }}>
       <Grid container spacing={{ xs: 6, md: 8 }}>
-        {character && (
-          <Grid size={{ xs: 12, md: 6 }}>
-            <CharacterItem character={character} isDetail />
-          </Grid>
-        )}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <CharacterItem character={character} isDetail />
+        </Grid>
         {otherCharacters.length > 0 && (
           <Grid size={{ xs: 12, md: 6 }}>
             <Box>

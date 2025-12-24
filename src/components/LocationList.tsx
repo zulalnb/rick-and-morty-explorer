@@ -1,14 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Grid from "@mui/material/Grid";
+import { LocationItem } from "./LocationItem";
 import { Location } from "@/types/api/location";
-import { LocationSkeleton } from "./LocationSkeleton";
-
-const LocationItem = dynamic(
-  () => import("./LocationItem").then((m) => m.LocationItem),
-  { ssr: false, loading: () => <LocationSkeleton component="li" /> }
-);
 
 export const LocationList = ({
   locations,

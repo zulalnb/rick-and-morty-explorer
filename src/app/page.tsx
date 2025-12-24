@@ -52,12 +52,8 @@ export default async function Page() {
       <Typography variant="h1" sx={visuallyHidden}>
         Locations
       </Typography>
-      {locations.results && (
-        <>
-          <LocationList locations={locations.results} />
-          <Pagination count={locations.info.pages} currentPage={1} />
-        </>
-      )}
+      <LocationList locations={locations.results} />
+      <Pagination count={locations.info.pages} currentPage={1} />
     </Container>
   );
 }

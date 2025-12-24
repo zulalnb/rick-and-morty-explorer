@@ -16,7 +16,9 @@ type Props = {
 };
 
 const getLocations = async (page: number = 1): Promise<LocationAPIResponse> => {
-  const res = await fetch(`${BASE_API_URL}/location?page=${page}`);
+  const res = await fetch(`${BASE_API_URL}/location?page=${page}`, {
+    next: { revalidate: 3600 },
+  });
   const data: LocationAPIResponse = await res.json();
   return data;
 };
@@ -28,7 +30,7 @@ export async function generateMetadata(
   const page = (await params).page;
   const currentPage = Number(page);
 
-  if (isNaN(currentPage) || !Number.isInteger(page) || currentPage < 1) {
+  if (isNaN(currentPage) || !Number.isInteger(currentPage) || currentPage < 1) {
     return {
       title: "Page Not Found (404)",
       robots: { index: false, follow: false },
@@ -69,7 +71,7 @@ export default async function Page(props: { params: Params }) {
   const params = await props.params;
   const currentPage = Number(params.page);
 
-  if (isNaN(currentPage) || !Number.isInteger(params.page) || currentPage < 1) {
+  if (isNaN(currentPage) || !Number.isInteger(currentPage) || currentPage < 1) {
     return notFound();
   }
 
@@ -84,12 +86,8 @@ export default async function Page(props: { params: Params }) {
       <Typography variant="h1" sx={visuallyHidden}>
         Locations
       </Typography>
-      {locations.results && (
-        <>
-          <LocationList locations={locations.results} />
-          <Pagination count={locations.info.pages} currentPage={currentPage} />
-        </>
-      )}
+      <LocationList locations={locations.results} />
+      <Pagination count={locations.info.pages} currentPage={currentPage} />
     </Container>
   );
 }
