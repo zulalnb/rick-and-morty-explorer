@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import { CharacterItem } from "./CharacterItem";
 import { useAppSelector } from "@/lib/hooks";
@@ -17,7 +18,9 @@ export function FavoriteCharacterList() {
               sm: 6,
             }}
           >
-            <CharacterItem character={character} />
+            <Link href={`/characters/${character.id}`}>
+              <CharacterItem character={character} />
+            </Link>
           </Grid>
         ))}
       </Grid>
