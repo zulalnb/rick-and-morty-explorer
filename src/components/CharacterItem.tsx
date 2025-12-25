@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -24,7 +23,6 @@ export const CharacterItem = ({
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
-  const href = !isDetail ? `/characters/${character.id}` : undefined;
 
   return (
     <Card sx={{ borderRadius: 0, boxShadow: "none" }}>
@@ -44,7 +42,11 @@ export const CharacterItem = ({
           }}
         />
         <IconButton
-          onClick={() => dispatch(toggleFavorite(character))}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dispatch(toggleFavorite(character));
+          }}
           sx={{
             position: "absolute",
             top: 10,
@@ -59,8 +61,6 @@ export const CharacterItem = ({
         </IconButton>
       </Box>
       <Box
-        component={isDetail ? "div" : Link}
-        href={href}
         sx={{
           ...(!isDetail && {
             display: "flex",

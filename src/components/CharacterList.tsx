@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
@@ -81,7 +82,9 @@ export const CharacterList = ({
               width: "100%",
             }}
           >
-            <CharacterItem character={character} />
+            <Link href={`/characters/${character.id}`}>
+              <CharacterItem character={character} />
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

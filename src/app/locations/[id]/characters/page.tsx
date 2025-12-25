@@ -2,20 +2,19 @@ import { Suspense } from "react";
 import type { Metadata, ResolvingMetadata } from "next";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
+import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import PublicOff from "@mui/icons-material/PublicOff";
-import { unstable_capitalize as capitalize, visuallyHidden } from "@mui/utils";
-
 import { FilterButtons } from "@/components/FilterButtons";
+import CharacterListSection from "@/components/CharacterListSection";
+import CharacterListSkeleton from "@/components/CharacterListSkeleton";
 import { normalizeStatusParam } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
 import { Location } from "@/types/api/location";
 import { getLocationCharacters } from "@/lib/server/locationCharacters";
-import CharacterListSection from "@/components/CharacterListSection";
-import CharacterListSkeleton from "@/components/CharacterListSkeleton";
 
 type Props = {
   params: Promise<{ id: string }>;
