@@ -13,8 +13,8 @@ import CharacterListSection from "@/components/CharacterListSection";
 import CharacterListSkeleton from "@/components/CharacterListSkeleton";
 import { normalizeStatusParam } from "@/lib/utils";
 import { BASE_API_URL } from "@/lib/constants";
-import { Location } from "@/types/api/location";
 import { getLocationCharacters } from "@/lib/server/locationCharacters";
+import { Location } from "@/types/api/location";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -200,7 +200,13 @@ export default async function Page(props: Props) {
       </Container>
       <FilterButtons />
 
-      <Suspense fallback={<CharacterListSkeleton />}>
+      <Suspense
+        fallback={
+          <Container>
+            <CharacterListSkeleton />
+          </Container>
+        }
+      >
         <CharacterListSection
           residents={residents}
           locationId={Number(params.id)}
