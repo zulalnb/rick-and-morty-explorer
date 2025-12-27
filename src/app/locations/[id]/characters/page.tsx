@@ -175,7 +175,7 @@ export default async function Page(props: Props) {
     <main>
       <Container>
         <Typography variant="h1" sx={visuallyHidden}>
-          Characters
+          {locationInfo.name} - Characters
         </Typography>
         <Box
           sx={{
