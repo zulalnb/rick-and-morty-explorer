@@ -31,24 +31,26 @@ export default async function CharacterListSection({
   }
 
   if (characters.length < 1) {
-    <Box textAlign="center" py={8}>
-      <SearchOff sx={{ fontSize: 72, color: "action.active" }} />
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
-        No Matching Characters
-      </Typography>
-      <Typography color="text.secondary">
-        No characters with the selected status in this location.
-      </Typography>
-      <Button
-        variant="outlined"
-        component={NextLink}
-        href={`/locations/${locationId}/characters`}
-        sx={{ mt: 2 }}
-        size="large"
-      >
-        Clear Filter
-      </Button>
-    </Box>;
+    return (
+      <Box textAlign="center" py={8}>
+        <SearchOff sx={{ fontSize: 72, color: "action.active" }} />
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
+          No Matching Characters
+        </Typography>
+        <Typography color="text.secondary">
+          No characters with the selected status in this location.
+        </Typography>
+        <Button
+          variant="outlined"
+          component={NextLink}
+          href={`/locations/${locationId}/characters`}
+          sx={{ mt: 2 }}
+          size="large"
+        >
+          Clear Filter
+        </Button>
+      </Box>
+    );
   }
 
   return (
