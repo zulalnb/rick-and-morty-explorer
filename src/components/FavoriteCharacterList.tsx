@@ -58,7 +58,10 @@ export function FavoriteCharacterList() {
           }}
         >
           <Link href={`/characters/${character.id}`}>
-            <CharacterItem character={character} />
+            <CharacterItem
+              character={character}
+              sizes="(max-width: 900px) 100vw, 50vw"
+            />
           </Link>
         </Grid>
       ))}
