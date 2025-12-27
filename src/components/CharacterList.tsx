@@ -75,7 +75,7 @@ export const CharacterList = ({
           },
         }}
       >
-        {characters.map((character) => (
+        {characters.map((character, index) => (
           <SwiperSlide
             key={character.id}
             style={{
@@ -83,7 +83,11 @@ export const CharacterList = ({
             }}
           >
             <Link href={`/characters/${character.id}`}>
-              <CharacterItem character={character} />
+              <CharacterItem
+                character={character}
+                priority={index < 2}
+                sizes="(max-width: 600px) 100vw, 33vw"
+              />
             </Link>
           </SwiperSlide>
         ))}

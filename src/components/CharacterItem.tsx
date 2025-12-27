@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -12,13 +11,18 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 import { Character } from "@/types/api/character";
+import { CharacterImageWrapper } from "./CharacterImageWrapper";
 
 export const CharacterItem = ({
   character,
   isDetail = false,
+  priority = false,
+  sizes,
 }: {
   character: Character;
+  sizes: string;
   isDetail?: boolean;
+  priority?: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
@@ -26,20 +30,12 @@ export const CharacterItem = ({
 
   return (
     <Card sx={{ borderRadius: 0, boxShadow: "none" }}>
-      <Box sx={{ position: "relative", aspectRatio: 1 / 1 }}>
-        <Image
+      <Box sx={{ position: "relative" }}>
+        <CharacterImageWrapper
           src={character.image}
           alt={character.name}
-          fill
-          priority
-          fetchPriority="high"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
+          priority={priority}
+          sizes={sizes}
         />
         <IconButton
           onClick={(e) => {

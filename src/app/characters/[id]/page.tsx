@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { visuallyHidden } from "@mui/utils";
 import { Character } from "@/types/api/character";
 import { Location } from "@/types/api/location";
 import { getRandomItems } from "@/lib/utils";
@@ -128,9 +129,17 @@ export default async function Page(props: Props) {
 
   return (
     <Container component="main" sx={{ marginY: 4 }}>
+      <Typography variant="h1" sx={visuallyHidden}>
+        Other Characters
+      </Typography>
       <Grid container spacing={{ xs: 6, md: 8 }}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <CharacterItem character={character} isDetail />
+          <CharacterItem
+            character={character}
+            isDetail
+            priority
+            sizes="(max-width: 600px) 100vw, 50vw"
+          />
         </Grid>
         {otherCharacters.length > 0 && (
           <Grid size={{ xs: 12, md: 6 }}>
@@ -151,6 +160,7 @@ export default async function Page(props: Props) {
                         src={character.image}
                         alt={character.name}
                         priority
+                        sizes="(max-width: 600px) 20vw, (max-width: 900px) 15vw, 120px"
                       />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
