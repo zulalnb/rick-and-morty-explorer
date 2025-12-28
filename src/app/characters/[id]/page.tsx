@@ -43,10 +43,7 @@ const getOtherCharacters = async (
   const filteredCharacters = characters.filter(
     (character) => character.status === status
   );
-  const otherCharacters: Character[] =
-    filteredCharacters.length > 2
-      ? getRandomItems(filteredCharacters)
-      : filteredCharacters;
+  const otherCharacters: Character[] = getRandomItems(filteredCharacters);
 
   return otherCharacters;
 };
