@@ -72,6 +72,14 @@ export default function RootLayout({
               <CssBaseline />
               <GlobalStyles
                 styles={{
+                  html: {
+                    scrollBehavior: "smooth",
+                  },
+                  "@media (prefers-reduced-motion: reduce)": {
+                    html: {
+                      scrollBehavior: "auto",
+                    },
+                  },
                   a: {
                     textDecoration: "inherit",
                     color: "inherit",
