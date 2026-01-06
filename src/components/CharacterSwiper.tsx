@@ -21,7 +21,7 @@ export const CharacterSwiper = ({
   return (
     <>
       <Swiper
-        key={searchParams.get("status") || "all"}
+        key={searchParams.toString()}
         modules={[Pagination, A11y]}
         pagination={{
           el: ".custom-pagination",
