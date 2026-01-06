@@ -10,7 +10,7 @@ import theme from "@/theme";
 import { Header } from "@/components/Header";
 import { BASE_URL } from "@/lib/constants";
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import "swiper/css/a11y";
 
 const NEXT_VERSION = process.env.NEXT_PUBLIC_NEXT_VERSION

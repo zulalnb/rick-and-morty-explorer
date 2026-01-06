@@ -2,7 +2,6 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { type Theme } from "@mui/material";
 import MUIPagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 
@@ -18,8 +17,8 @@ const PaginationContent = ({
 
   return (
     <MUIPagination
-      sx={(theme: Theme) => ({
-        mt: 12,
+      sx={(theme) => ({
+        mt: 6,
         mb: 2,
         [theme.breakpoints.up("md")]: {
           mt: 8,
