@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Button from "@mui/material/Button";
 import CircleIcon from "@mui/icons-material/Circle";
 
@@ -17,7 +16,7 @@ export const FilterButton = ({
 }) => {
   return (
     <Button
-      component={Link}
+      component="a"
       href={href}
       startIcon={<CircleIcon color={iconColor} />}
       variant="outlined"
