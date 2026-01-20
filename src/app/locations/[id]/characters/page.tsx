@@ -31,7 +31,7 @@ const getLocationInfo = async (id: number): Promise<Location> => {
 
 export async function generateMetadata(
   { params, searchParams }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const query = await searchParams;
   const { id } = await params;
@@ -39,8 +39,8 @@ export async function generateMetadata(
     typeof query.page === "string"
       ? query.page
       : Array.isArray(query.page)
-      ? query.page[0]
-      : 1
+        ? query.page[0]
+        : 1,
   );
 
   const status = Array.isArray(query.status)
@@ -117,7 +117,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page(props: Props) {
+export default async function Characters(props: Props) {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const id = Number(params.id);
@@ -125,8 +125,8 @@ export default async function Page(props: Props) {
     typeof searchParams.page === "string"
       ? searchParams.page
       : Array.isArray(searchParams.page)
-      ? searchParams.page[0]
-      : 1
+        ? searchParams.page[0]
+        : 1,
   );
 
   const status = Array.isArray(searchParams.status)

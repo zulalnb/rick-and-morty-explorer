@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+export default async function Favorites() {
   return (
     <Container component="main" sx={{ marginY: 4 }}>
       <Typography variant="h1" sx={visuallyHidden}>

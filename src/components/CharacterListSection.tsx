@@ -32,7 +32,7 @@ export default async function CharacterListSection({
 
   if (characters.length < 1) {
     return (
-      <Box textAlign="center" py={8}>
+      <Box textAlign="center" py={8} px={2}>
         <SearchOff sx={{ fontSize: 72, color: "action.active" }} />
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           No Matching Characters

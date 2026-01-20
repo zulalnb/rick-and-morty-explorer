@@ -35,13 +35,13 @@ const getCharacterDetail = async (id: number): Promise<Character | null> => {
 
 const getOtherCharacters = async (
   characterIds: number[],
-  status: string
+  status: string,
 ): Promise<Character[]> => {
   const res = await fetch(`${BASE_API_URL}/character/${characterIds}`);
   const data: Character[] = await res.json();
   const characters: Character[] = Array.isArray(data) ? data : [data];
   const filteredCharacters = characters.filter(
-    (character) => character.status === status
+    (character) => character.status === status,
   );
   const otherCharacters: Character[] = getRandomItems(filteredCharacters);
 
@@ -50,7 +50,7 @@ const getOtherCharacters = async (
 
 export async function generateMetadata(
   props: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const params = await props.params;
   const character = await getCharacterDetail(Number(params.id));
@@ -96,7 +96,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page(props: Props) {
+export default async function CharacterDetail(props: Props) {
   const params = await props.params;
   const id = Number(params.id);
   const character = await getCharacterDetail(id);
@@ -121,7 +121,7 @@ export default async function Page(props: Props) {
 
   const otherCharacters = await getOtherCharacters(
     characterIds,
-    character.status
+    character.status,
   );
 
   return (

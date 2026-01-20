@@ -30,7 +30,9 @@ export const CharacterItem = ({
 
   return (
     <Card sx={{ borderRadius: 0, boxShadow: "none" }}>
-      <Box sx={{ position: "relative" }}>
+      <Box
+        sx={{ position: "relative", WebkitTapHighlightColor: "transparent" }}
+      >
         <CharacterImageWrapper
           src={character.image}
           alt={character.name}
@@ -99,8 +101,8 @@ export const CharacterItem = ({
                   character.status === "Dead"
                     ? "error"
                     : character.status === "Alive"
-                    ? "success"
-                    : "disabled"
+                      ? "success"
+                      : "disabled"
                 }
               />
               <Typography sx={{ fontSize: isDetail ? 18 : 16 }}>

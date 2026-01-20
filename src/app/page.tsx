@@ -22,30 +22,22 @@ const getLocations = async (page = 1): Promise<LocationAPIResponse> => {
 
 export async function generateMetadata(
   { params: _params, searchParams: _searchParams }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const previousOpenGraph = (await parent).openGraph || {};
 
-  const title = "All Rick and Morty Locations";
-  const description =
-    "Explore a complete list of all iconic locations from the Rick and Morty multiverse. Discover dimensions, see resident characters, and dive deep into the show's lore.";
-
   return {
-    title,
-    description,
     alternates: {
       canonical: "/",
     },
     openGraph: {
       ...previousOpenGraph,
-      title,
-      description,
       url: "/",
     },
   };
 }
 
-export default async function Page() {
+export default async function Home() {
   const locations = await getLocations();
   return (
     <Container component={"main"} sx={{ marginY: 6 }}>

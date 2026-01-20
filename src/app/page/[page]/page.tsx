@@ -25,7 +25,7 @@ const getLocations = async (page: number = 1): Promise<LocationAPIResponse> => {
 
 export async function generateMetadata(
   { params, searchParams: _searchParams }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const page = (await params).page;
   const currentPage = Number(page);
@@ -67,7 +67,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page(props: { params: Params }) {
+export default async function Locations(props: { params: Params }) {
   const params = await props.params;
   const currentPage = Number(params.page);
 
