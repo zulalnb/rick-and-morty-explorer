@@ -93,14 +93,18 @@ export async function generateMetadata(
     ? `/locations/${id}/characters?${searchQuery.toString()}`
     : `/locations/${id}/characters`;
 
-  const title = `All ${status ? capitalize(status) + " " : ""}Characters in ${
+  let title = `All ${status ? capitalize(status) + " " : ""}Characters in ${
     location.name
   }`;
+  title = page > 1 ? `${title} - ${page} of ${totalPages}` : title;
+
   const description = `Discover all ${
     status ? status + " " : ""
   }characters from ${location.name}, a planet in the ${
     location.dimension
-  } dimension. See the full list of residents from the Rick and Morty universe and learn about their status.`;
+  } dimension ${
+    page > 1 ? ` - ${page} of ${totalPages}` : ""
+  }. See the full list of residents from the Rick and Morty universe and learn about their status.`;
 
   return {
     title,

@@ -49,7 +49,7 @@ export async function generateMetadata(
   const canonicalPath = `/page/${currentPage}`;
   const previousOpenGraph = (await parent).openGraph || {};
 
-  const title = `Rick and Morty Locations - Page ${currentPage} of ${locations.info.count}`;
+  const title = `Rick and Morty Locations - Page ${currentPage} of ${locations.info.pages}`;
   const description = `Continue exploring iconic locations from the Rick and Morty universe on page ${currentPage}. Discover unique planets, dimensions, and the characters who inhabit them..`;
 
   return {
