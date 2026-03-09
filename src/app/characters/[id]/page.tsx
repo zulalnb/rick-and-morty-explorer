@@ -126,9 +126,6 @@ export default async function CharacterDetail(props: Props) {
 
   return (
     <Container component="main" sx={{ marginY: 4 }}>
-      <Typography variant="h1" sx={visuallyHidden}>
-        {character.name}
-      </Typography>
       <Grid container spacing={{ xs: 6, md: 8 }}>
         <Grid size={{ xs: 12, md: 6 }}>
           <CharacterItem

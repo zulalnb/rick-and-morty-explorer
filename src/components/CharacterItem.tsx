@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 import { Character } from "@/types/api/character";
 import { CharacterImageWrapper } from "./CharacterImageWrapper";
+import { usePathname } from "next/navigation";
 
 export const CharacterItem = ({
   character,
@@ -27,6 +28,7 @@ export const CharacterItem = ({
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
+  const pathname = usePathname();
 
   return (
     <Card sx={{ borderRadius: 0, boxShadow: "none" }}>
@@ -80,7 +82,7 @@ export const CharacterItem = ({
         >
           <Box>
             <Typography
-              component="h1"
+              component={isDetail ? "h1" : "h2"}
               sx={{
                 display: "block",
                 fontWeight: "bold",
