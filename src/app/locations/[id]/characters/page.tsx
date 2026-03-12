@@ -16,6 +16,28 @@ import { BASE_API_URL } from "@/lib/constants";
 import { getLocationCharacters } from "@/lib/server/locationCharacters";
 import { Location } from "@/types/api/location";
 
+function buildPaginationUrl(
+  basePath: string,
+  page: number | null,
+  status?: string,
+) {
+  if (!page) return null;
+
+  const params = new URLSearchParams();
+
+  if (status) {
+    params.set("status", status);
+  }
+
+  if (page > 1) {
+    params.set("page", String(page));
+  }
+
+  const query = params.toString();
+
+  return query ? `${basePath}?${query}` : basePath;
+}
+
 type Props = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -68,7 +90,7 @@ export async function generateMetadata(
     };
   }
 
-  const { characters, totalPages } = await getLocationCharacters({
+  const { characters, totalPages, info } = await getLocationCharacters({
     residents: location.residents,
     page,
     status: normalizedStatus,
@@ -88,6 +110,8 @@ export async function generateMetadata(
   if (page > 1) {
     searchQuery.set("page", String(page));
   }
+
+  const basePath = `/locations/${id}/characters`;
 
   const canonicalPath = searchQuery.toString()
     ? `/locations/${id}/characters?${searchQuery.toString()}`
@@ -111,6 +135,10 @@ export async function generateMetadata(
     description,
     alternates: {
       canonical: canonicalPath,
+    },
+    pagination: {
+      previous: buildPaginationUrl(basePath, info.prev, status),
+      next: buildPaginationUrl(basePath, info.next, status),
     },
     openGraph: {
       ...previousOpenGraph,

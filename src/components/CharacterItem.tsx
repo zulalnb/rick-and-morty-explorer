@@ -28,7 +28,6 @@ export const CharacterItem = ({
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
   const isFavorite = favorites.find((item) => item.id === character.id);
-  const pathname = usePathname();
 
   return (
     <Card sx={{ borderRadius: 0, boxShadow: "none" }}>

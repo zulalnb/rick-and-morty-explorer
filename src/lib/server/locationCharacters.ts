@@ -12,7 +12,7 @@ type GetLocationCharactersParams = {
 };
 
 const getCharacterDetailsByLocation = async (
-  ids: number[]
+  ids: number[],
 ): Promise<Character[]> => {
   const res = await fetch(`${BASE_API_URL}/character/${ids}`, {
     next: { revalidate: 3600 },
@@ -35,6 +35,12 @@ export async function getLocationCharacters({
   if (characterIds.length === 0) {
     return {
       characters: [],
+      info: {
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+      },
       totalPages: 0,
       totalCount: 0,
     };
@@ -46,19 +52,28 @@ export async function getLocationCharacters({
     ? allCharacters.filter((c) => c.status.toLowerCase() === status)
     : allCharacters;
 
-  const totalCount = filteredCharacters.length;
+  const count = filteredCharacters.length;
 
   // pagination is ALWAYS applied, page defaults to 1
   const { paginatedArray, totalPages } = paginateItems(
     filteredCharacters,
-    pageSize
+    pageSize,
   );
 
-  const characters = paginatedArray[page - 1] ?? [];
+  const safePage =
+    totalPages === 0 ? 1 : Math.min(Math.max(page, 1), totalPages);
+
+  const characters = paginatedArray[safePage - 1] ?? [];
 
   return {
     characters,
+    info: {
+      count,
+      pages: totalPages,
+      next: safePage < totalPages ? safePage + 1 : null,
+      prev: safePage > 1 ? safePage - 1 : null,
+    },
     totalPages,
-    totalCount,
+    totalCount: count,
   };
 }

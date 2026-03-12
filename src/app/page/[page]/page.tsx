@@ -46,7 +46,7 @@ export async function generateMetadata(
     };
   }
 
-  const canonicalPath = `/page/${currentPage}`;
+  const canonicalPath = currentPage > 1 ? `/page/${currentPage}` : "/";
   const previousOpenGraph = (await parent).openGraph || {};
 
   const title = `Rick and Morty Locations - Page ${currentPage} of ${locations.info.pages}`;
@@ -57,6 +57,14 @@ export async function generateMetadata(
     description,
     alternates: {
       canonical: canonicalPath,
+    },
+    pagination: {
+      previous: locations.info.prev
+        ? currentPage === 2
+          ? "/"
+          : `/page/${currentPage - 1}`
+        : null,
+      next: locations.info.next ? `/page/${currentPage + 1}` : null,
     },
     openGraph: {
       ...previousOpenGraph,
