@@ -90,13 +90,13 @@ export async function generateMetadata(
     };
   }
 
-  const { characters, totalPages, info } = await getLocationCharacters({
+  const { characters, info } = await getLocationCharacters({
     residents: location.residents,
     page,
     status: normalizedStatus,
   });
 
-  if (characters.length < 1 && page > totalPages) {
+  if (characters.length < 1 && page > info.pages) {
     return {
       title: "Page Not Found (404)",
       robots: { index: false, follow: false },
@@ -120,14 +120,14 @@ export async function generateMetadata(
   let title = `All ${status ? capitalize(status) + " " : ""}Characters in ${
     location.name
   }`;
-  title = page > 1 ? `${title} - ${page} of ${totalPages}` : title;
+  title = page > 1 ? `${title} - ${page} of ${info.pages}` : title;
 
   const description = `Discover all ${
     status ? status + " " : ""
   }characters from ${location.name}, a planet in the ${
     location.dimension
   } dimension ${
-    page > 1 ? ` - ${page} of ${totalPages}` : ""
+    page > 1 ? ` - ${page} of ${info.pages}` : ""
   }. See the full list of residents from the Rick and Morty universe and learn about their status.`;
 
   return {

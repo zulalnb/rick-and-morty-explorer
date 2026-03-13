@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleFavorite } from "@/lib/features/favorite/favoriteSlice";
 import { Character } from "@/types/api/character";
 import { CharacterImageWrapper } from "./CharacterImageWrapper";
-import { usePathname } from "next/navigation";
 
 export const CharacterItem = ({
   character,

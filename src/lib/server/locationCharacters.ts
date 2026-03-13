@@ -41,8 +41,6 @@ export async function getLocationCharacters({
         next: null,
         prev: null,
       },
-      totalPages: 0,
-      totalCount: 0,
     };
   }
 
@@ -73,7 +71,5 @@ export async function getLocationCharacters({
       next: safePage < totalPages ? safePage + 1 : null,
       prev: safePage > 1 ? safePage - 1 : null,
     },
-    totalPages,
-    totalCount: count,
   };
 }

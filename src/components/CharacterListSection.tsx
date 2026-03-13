@@ -20,13 +20,13 @@ export default async function CharacterListSection({
   status?: CharacterStatus;
   locationId: number;
 }) {
-  const { characters, totalPages } = await getLocationCharacters({
+  const { characters, info } = await getLocationCharacters({
     residents,
     page,
     status,
   });
 
-  if (totalPages > 0 && page > totalPages) {
+  if (info.pages > 0 && page > info.pages) {
     return notFound();
   }
 
@@ -56,7 +56,7 @@ export default async function CharacterListSection({
   return (
     <>
       <CharacterList characters={characters} />
-      <Pagination count={totalPages} currentPage={page} />
+      <Pagination count={info.pages} currentPage={page} />
     </>
   );
 }
